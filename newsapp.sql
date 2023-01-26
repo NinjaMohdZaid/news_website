@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2023 at 04:30 PM
+-- Generation Time: Jan 26, 2023 at 08:55 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -36,6 +36,28 @@ CREATE TABLE `ads` (
   `status` char(1) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ads`
+--
+
+INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `status`) VALUES
+(1, 'I', 1673996400, 1674082800, 44, 'A'),
+(2, 'I', 1674082800, 1674774000, 12, 'A'),
+(3, 'I', 1674169200, 1674860400, 56, 'A'),
+(4, 'I', 1674169200, 1674860400, 56, 'D'),
+(5, 'I', 1674169200, 1674860400, 56, 'D'),
+(6, 'V', 1674169200, 1674860400, 56, 'A'),
+(7, 'V', 1674169200, 1674860400, 56, 'A'),
+(8, 'V', 1674169200, 1674860400, 56, 'A'),
+(9, 'I', 1674428400, 1674774000, 56, 'D'),
+(10, 'M', 1673910000, 1674082800, 4, 'A'),
+(11, 'M', 1673910000, 1674082800, 4, 'A'),
+(12, 'M', 1673910000, 1674082800, 4, 'A'),
+(13, 'M', 1673996400, 1674774000, 54, 'A'),
+(14, 'M', 1673996400, 1674774000, 54, 'A'),
+(15, 'M', 1673996400, 1674774000, 54, 'A'),
+(16, 'M', 1673996400, 1674774000, 54, 'A');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +70,60 @@ CREATE TABLE `ad_descriptions` (
   `description` longtext NOT NULL,
   `lang_code` char(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ad_descriptions`
+--
+
+INSERT INTO `ad_descriptions` (`ad_id`, `title`, `description`, `lang_code`) VALUES
+(1, 'dsgfdge', '', 'ar'),
+(1, 'dsgfdge', '', 'en'),
+(1, 'dsgfdge', '', 'ur'),
+(2, 'yfy', '', 'ar'),
+(2, 'yfy', '', 'en'),
+(2, 'yfy', '', 'ur'),
+(3, 'hgfty', '', 'ar'),
+(3, 'hgfty', '', 'en'),
+(3, 'hgfty', '', 'ur'),
+(4, 'hgfty', '', 'ar'),
+(4, 'hgfty', '', 'en'),
+(4, 'hgfty', '', 'ur'),
+(5, 'hgfty', '', 'ar'),
+(5, 'hgfty', '', 'en'),
+(5, 'hgfty', '', 'ur'),
+(6, 'hgfty', '', 'ar'),
+(6, 'hgfty', '', 'en'),
+(6, 'hgfty', '', 'ur'),
+(7, 'hgfty', '', 'ar'),
+(7, 'hgfty', '', 'en'),
+(7, 'hgfty', '', 'ur'),
+(8, 'hgfty', '', 'ar'),
+(8, 'hgfty', '', 'en'),
+(8, 'hgfty', '', 'ur'),
+(9, 'gyf', '', 'ar'),
+(9, 'gyf', '', 'en'),
+(9, 'gyf', '', 'ur'),
+(10, 'This is question', '', 'ar'),
+(10, 'This is question', '', 'en'),
+(10, 'This is question', '', 'ur'),
+(11, 'This is question', '', 'ar'),
+(11, 'This is question', '', 'en'),
+(11, 'This is question', '', 'ur'),
+(12, 'This is question', '', 'ar'),
+(12, 'This is question', '', 'en'),
+(12, 'This is question', '', 'ur'),
+(13, 'dgd', '', 'ar'),
+(13, 'dgd', '', 'en'),
+(13, 'dgd', '', 'ur'),
+(14, 'dgd', '', 'ar'),
+(14, 'dgd', '', 'en'),
+(14, 'dgd', '', 'ur'),
+(15, 'dgd', '', 'ar'),
+(15, 'dgd', '', 'en'),
+(15, 'dgd', '', 'ur'),
+(16, 'dgd', '', 'ar'),
+(16, 'dgd', '', 'en'),
+(16, 'dgd', '', 'ur');
 
 -- --------------------------------------------------------
 
@@ -68,6 +144,46 @@ INSERT INTO `languages` (`language`, `code`) VALUES
 ('عربى', 'ar'),
 ('English', 'en'),
 ('اُردُو', 'ur');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mcq_options`
+--
+
+CREATE TABLE `mcq_options` (
+  `option_id` int(11) NOT NULL,
+  `ad_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mcq_options`
+--
+
+INSERT INTO `mcq_options` (`option_id`, `ad_id`) VALUES
+(1, 15),
+(2, 16);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mcq_option_descriptions`
+--
+
+CREATE TABLE `mcq_option_descriptions` (
+  `option_id` int(11) NOT NULL,
+  `option_text` text NOT NULL,
+  `lang_code` char(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mcq_option_descriptions`
+--
+
+INSERT INTO `mcq_option_descriptions` (`option_id`, `option_text`, `lang_code`) VALUES
+(2, 'fe', 'ar'),
+(2, 'fe', 'en'),
+(2, 'fe', 'ur');
 
 -- --------------------------------------------------------
 
@@ -322,6 +438,18 @@ ALTER TABLE `languages`
   ADD UNIQUE KEY `code` (`code`);
 
 --
+-- Indexes for table `mcq_options`
+--
+ALTER TABLE `mcq_options`
+  ADD PRIMARY KEY (`option_id`);
+
+--
+-- Indexes for table `mcq_option_descriptions`
+--
+ALTER TABLE `mcq_option_descriptions`
+  ADD PRIMARY KEY (`option_id`,`lang_code`);
+
+--
 -- Indexes for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
@@ -382,7 +510,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ads`
 --
 ALTER TABLE `ads`
-  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `mcq_options`
+--
+ALTER TABLE `mcq_options`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`

@@ -12,39 +12,37 @@ if (strlen($_SESSION['login']) == 0) {
         $status = $_POST['status'];
         $PostTitle = $_POST['PostTitle'];
         $PostDetails = $_POST['PostDetails'];
-       
+
         $PostImage = $_POST['img'];
         // Validation for allowed extensions .in_array() function searches an array for a specific value.
-        if(!empty($_FILES["postimage"]["name"])) {
+        if (!empty($_FILES["postimage"]["name"])) {
             $imgfile = $_FILES["postimage"]["name"];
             $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
             // allowed extensions
             $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
             if (!in_array($extension, $allowed_extensions)) {
                 echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
-            }else{
-                if(!empty($_POST['img'])){
-                    unlink("postimages/".$_POST['img']);
+            } else {
+                if (!empty($_POST['img'])) {
+                    unlink("postimages/" . $_POST['img']);
                 }
                 // get the image extension
                 $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
                 //rename the image file
-                $PostImage = $imgnewfile = time()."_".md5($imgfile) . $extension;
+                $PostImage = $imgnewfile = time() . "_" . md5($imgfile) . $extension;
                 // Code for move image into directory
                 move_uploaded_file($_FILES["postimage"]["tmp_name"], "postimages/" . $imgnewfile);
             }
-           
         }
-        $query = mysqli_query($con,"UPDATE tblposts SET `CategoryId`='$catid',`status` = '$status',`PostImage`='$PostImage' WHERE id=$id");
+        $query = mysqli_query($con, "UPDATE tblposts SET `CategoryId`='$catid',`status` = '$status',`PostImage`='$PostImage' WHERE id=$id");
         if (!empty($query)) {
-            $_query = mysqli_query($con,"REPLACE INTO tblpost_descriptions(`id`,`PostTitle`,`PostDetails`,`lang_code`) VALUES('$id','$PostTitle','$PostDetails','$lang_code')");
-            if(!empty($_query)){
+            $_query = mysqli_query($con, "REPLACE INTO tblpost_descriptions(`id`,`PostTitle`,`PostDetails`,`lang_code`) VALUES('$id','$PostTitle','$PostDetails','$lang_code')");
+            if (!empty($_query)) {
                 $msg = "Post updated";
             }
         } else {
             $error = "Something went wrong . Please try again.";
         }
-       
     }
 ?>
     <!DOCTYPE html>
@@ -58,7 +56,7 @@ if (strlen($_SESSION['login']) == 0) {
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
         <!-- App title -->
-        <title>Newsportal | Edit Post</title>
+        <title>Newsportal | Edit Advertisement</title>
 
         <!-- Summernote css -->
         <link href="../plugins/summernote/summernote.css" rel="stylesheet" />
@@ -108,16 +106,16 @@ if (strlen($_SESSION['login']) == 0) {
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Edit Post </h4>
+                                    <h4 class="page-title">Edit Advertisement </h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
                                             <a href="#">Admin</a>
                                         </li>
                                         <li>
-                                            <a href="#"> Posts </a>
+                                            <a href="#"> Ads </a>
                                         </li>
                                         <li class="active">
-                                            Edit Post
+                                            Edit Advertisement
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -147,14 +145,13 @@ if (strlen($_SESSION['login']) == 0) {
                         </div>
 
                         <?php
-                         $lang_code = $_SESSION['lang_code'];
-                         $condition = $limit = $join = '';
-                         $fields = "tblposts.*,tblpost_descriptions.PostTitle as PostTitle,tblpost_descriptions.PostDetails as PostDetails";
-                         $condition .= " AND tblpost_descriptions.lang_code = '$lang_code'";
-                         $condition .= " AND tblposts.is_deleted = 'N'";
-                         $condition .= " AND tblposts.id = ".$_GET['news_id'];
-                         $join .= " LEFT JOIN tblpost_descriptions ON tblpost_descriptions.id = tblposts.id";
-                         $query = mysqli_query($con, "Select $fields from tblposts $join where 1 $condition");
+                        $lang_code = $_SESSION['lang_code'];
+                        $condition = $limit = $join = '';
+                        $fields = "ads.*,ad_descriptions.title,ad_descriptions.description";
+                        $condition .= " AND ad_descriptions.lang_code = '$lang_code'";
+                        $condition .= " AND ads.ad_id = " . $_GET['ad_id'];
+                        $join .= " LEFT JOIN ad_descriptions ON ad_descriptions.ad_id = ads.ad_id";
+                        $query = mysqli_query($con, "Select $fields from ads $join where 1 $condition");
                         while ($row = mysqli_fetch_array($query)) {
                         ?>
                             <div class="row">
@@ -162,69 +159,91 @@ if (strlen($_SESSION['login']) == 0) {
                                     <div class="p-6">
                                         <div class="">
                                             <form name="editpost" method="post" enctype="multipart/form-data">
-                                            <input type="hidden" name="img" value="<?php echo htmlentities($row['PostImage']); ?>">
-                                                <div class="form-group m-b-20">
-                                                    <label for="PostTitle">Post Title</label>
-                                                    <input type="text" class="form-control" id="PostTitle" value="<?php echo htmlentities($row['PostTitle']); ?>" name="PostTitle" placeholder="Enter title" required>
-                                                </div>
-
-
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="category_id">Category</label>
-                                                    <select class="form-control" name="category_id" id="category" onChange="getSubCat(this.value);" required>
-                                                        <option value="">Select Category </option>
-                                                        <?php
-                                                        // Feching active categories
-                                                        $lang_code = $_SESSION['lang_code'];
-                                                        $condition = $limit = $join = '';
-                                                        $fields = "tblcategory.*,tblcategory_descriptions.CategoryName as CategoryName,tblcategory_descriptions.Description as Description";
-                                                        $condition .= " AND tblcategory_descriptions.lang_code = '$lang_code' AND tblcategory.Is_Active=1";
-                                                        $join .= " LEFT JOIN tblcategory_descriptions ON tblcategory_descriptions.id = tblcategory.id";
-                                                        $ret = mysqli_query($con, "Select $fields from tblcategory $join where 1 $condition");
-                                                        while ($result = mysqli_fetch_array($ret)) {
-                                                        ?>
-                                                            <option value="<?php echo htmlentities($result['id']); ?>" <?php if($result['id'] == $row['CategoryId']) echo 'selected'; ?>><?php echo htmlentities($result['CategoryName']); ?></option>
-                                                        <?php } ?>
-
+                                                    <label for="type">Ad Type</label>
+                                                    <input type="hidden" value="<?php echo htmlentities($row['type']); ?>">
+                                                    <select class="form-control" name="type" id="type" required disabled>
+                                                        <option value="T" <?php if ($row['type'] == 'T') echo 'selected' ?> target_id="text_dependent_field">Text</option>
+                                                        <option value="I" <?php if ($row['type'] == 'I') echo 'selected' ?> target_id="image_dependent_field">Image</option>
+                                                        <option value="V" <?php if ($row['type'] == 'V') echo 'selected' ?> target_id="video_dependent_field">video</option>
+                                                        <option value="M" <?php if ($row['type'] == 'M') echo 'selected' ?> target_id="mcq_dependent_field">Multiple choice quiz</option>
                                                     </select>
                                                 </div>
+                                                
                                                 <div class="form-group m-b-20">
-                                                    <label for="status">Status</label>
-                                                    <select class="form-control" name="status" id="status" required>
-                                                        <option value="A" <?php if($row['status'] == 'A') echo 'selected'; ?>>Approved</option>
-                                                        <option value="D" <?php if($row['status'] == 'D') echo 'selected'; ?>>Disapproved</option>
-                                                    </select>
+                                                    <label for="title">Title</label>
+                                                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="<?php echo htmlentities($row['title']); ?>" required>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="card-box">
-                                                            <h4 class="m-b-30 m-t-0 header-title"><b>Post Details</b></h4>
-                                                            <textarea class="summernote" name="PostDetails" required><?php echo htmlentities($row['PostDetails']); ?></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="card-box">
-                                                            <h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
-                                                            <img src="postimages/<?php echo htmlentities($row['PostImage']); ?>" width="300" />
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="card-box">
-                                                                        <h4 class="m-b-30 m-t-0 header-title"><b>Update Image</b></h4>
-                                                                        <input type="file" class="form-control" id="postimage" name="postimage">
-                                                                    </div>
+                                               
+                                                <?php
+                                                if ($row['type'] == 'V') {
+                                                    $dir = "ads/files/videos/" . $_REQUEST['ad_id'];
+                                                    if (is_dir($dir)) {
+                                                        $dir_data = scandir($dir, 1);
+                                                        $video = reset($dir_data);
+                                                    }
+                                                ?>
+                                                    <div class="form-group m-b-20">
+                                                        <video width="320" height="240" controls>
+                                                            <source src="<?php echo $dir . '/' . $video ?>">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                        <div class="row dependent_field" id="video_dependent_field">
+                                                            <div class="col-sm-12">
+                                                                <div class="card-box">
+                                                                    <h4 class="m-b-30 m-t-0 header-title"><b>Update Video</b></h4>
+                                                                    <input type="file" class="form-control" id="video" name="video" accept="video/*">
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
-                                                </div>
+                                                <?php }elseif($row['type'] == 'I'){ 
+                                                     $dir = "ads/files/images/" . $_REQUEST['ad_id'];
+                                                     if (is_dir($dir)) {
+                                                         $dir_data = scandir($dir, 1);
+                                                         $image = reset($dir_data);
+                                                     }
+                                                    ?>
+                                                    <div class="form-group m-t-0 m-b-30">
+                                                        <img src="<?php echo $dir . '/' . $image ?>">
+                                                        <div class="row dependent_field" id="video_dependent_field">
+                                                            <div class="col-sm-12">
+                                                                <div class="card-box">
+                                                                    <h4 class="m-b-30 m-t-0 header-title"><b>Update Image</b></h4>
+                                                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                            <?php } ?>
+                                                    </div>
+                                                <?php } ?>
+                                            <div class="form-group m-b-20">
+                                                <label for="start_date">Start Date</label>
+                                                <input type="date" class="form-control" id="start_date" value="<?php echo date("Y-m-d",$row['start_date']); ?>" name="start_date" required>
 
+                                            </div>
+
+                                            <div class="form-group m-b-20">
+                                                <label for="end_date">End Date</label>
+                                                <input type="date" class="form-control" value="<?php echo date("Y-m-d",$row['end_date']); ?>" id="end_date" name="end_date" required>
+
+                                            </div>
+
+
+                                            <div class="form-group m-b-20">
+                                                <label for="frequency">Ad Frequency</label>
+                                                <input type="number" class="form-control" value="<?php echo htmlentities($row['frequency']); ?>" id="frequency" name="frequency" required>
+                                            </div>
+
+                                            <div class="form-group m-b-20">
+                                                <label for="status">Status</label>
+                                                <select class="form-control" name="status" id="status" required>
+                                                    <option value="A">Active</option>
+                                                    <option value="D">Disable</option>
+                                                </select>
+                                            </div>
                                             <button type="submit" name="update" class="btn btn-success waves-effect waves-light">Update </button>
 
                                         </div>
@@ -232,6 +251,7 @@ if (strlen($_SESSION['login']) == 0) {
                                 </div> <!-- end col -->
                             </div>
                             <!-- end row -->
+                            <?php } ?>
 
 
 

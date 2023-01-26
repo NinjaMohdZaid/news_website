@@ -1,47 +1,34 @@
-<?php 
+<?php
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
+    if ($_GET['action'] == 'del' && $_GET['news_id']) {
+        $id = intval($_GET['news_id']);
+        $query = mysqli_query($con, "update tblposts set is_deleted='Y' where id='$id'");
+        $msg = "News Moved to Recycle Bin";
+    }
+    // Code for restore
+    if ($_GET['action'] == 'change_status' && !empty($_GET['news_id']) && !empty($_GET['status'])) {
+        $id = intval($_GET['news_id']);
+        $status = $_GET['status'];
+        $query = mysqli_query($con, "update tblposts set status='$status' where id='$id'");
+        if($status == 'A'){
+            $msg = "News Approved";
+        }else{
+            $msg = "News Disapproved";
+        }
+    }
 
-if($_GET['action']='del')
-{
-$postid=intval($_GET['pid']);
-$query=mysqli_query($con,"update tblposts set Is_Active=0 where id='$postid'");
-if($query)
-{
-$msg="Post deleted ";
-}
-else{
-$error="Something went wrong . Please try again.";    
-} 
-}
 ?>
+    <!DOCTYPE html>
+    <html lang="en">
 
-<!DOCTYPE html>
-<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-        <meta name="author" content="Coderthemes">
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
-        <!-- App title -->
-        <title>In 360 News | Manage Ads</title>
-
-        <!--Morris Chart CSS -->
-		<link rel="stylesheet" href="../plugins/morris/morris.css">
-
-        <!-- jvectormap -->
-        <link href="../plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-
-        <!-- App css -->
+        <title>In 360 News | Manage Advertisements</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -49,15 +36,7 @@ $error="Something went wrong . Please try again.";
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
-
-        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
 
     </head>
@@ -69,10 +48,12 @@ $error="Something went wrong . Please try again.";
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-           <?php include('includes/topheader.php');?>
+            <?php include('includes/topheader.php'); ?>
 
             <!-- ========== Left Sidebar Start ========== -->
-           <?php include('includes/leftsidebar.php');?>
+            <?php include('includes/leftsidebar.php'); ?>
+            <!-- Left Sidebar End -->
+
 
 
             <!-- ============================================================== -->
@@ -85,137 +66,153 @@ $error="Something went wrong . Please try again.";
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
-                                    <h4 class="page-title">Manage Ads </h4>
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Manage Advertisements</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
-                                            <a href="#">Home</a>
+                                            <a href="#">Admin</a>
                                         </li>
                                         <li>
-                                            <a href="#">Ads</a>
+                                            <a href="#">Ads </a>
                                         </li>
                                         <li class="active">
-                                            Manage Ads
+                                            Manage Advertisements
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <!-- end row -->
 
 
-
-
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card-box">
-                         
+                            <div class="col-sm-6">
 
-                                    <div class="table-responsive">
-<table class="table table-colored table-centered table-inverse m-0">
-<thead>
-<tr>
-                                           
-<th>Title</th>
-<th>Category</th>
-<th>Subcategory</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-
-<?php
-$query=mysqli_query($con,"select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 ");
-$rowcount=mysqli_num_rows($query);
-if($rowcount==0)
-{
-?>
-<tr>
-
-<td colspan="4" align="center"><h3 style="color:red">No record found</h3></td>
-<tr>
-<?php 
-} else {
-while($row=mysqli_fetch_array($query))
-{
-?>
- <tr>
-<td><b><?php echo htmlentities($row['title']);?></b></td>
-<td><?php echo htmlentities($row['category'])?></td>
-<td><?php echo htmlentities($row['subcategory'])?></td>
-
-<td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']);?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a> 
-    &nbsp;<a href="manage-posts.php?pid=<?php echo htmlentities($row['postid']);?>&&action=del" onclick="return confirm('Do you reaaly want to delete ?')"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
- </tr>
-<?php } }?>
-                                               
-                                            </tbody>
-                                        </table>
+                                <?php if ($msg) { ?>
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
                                     </div>
-                                </div>
+                                <?php } ?>
+
+                                <?php if ($delmsg) { ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oh snap!</strong> <?php echo htmlentities($delmsg); ?>
+                                    </div>
+                                <?php } ?>
+
+
                             </div>
-                        </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="demo-box m-t-20">
+                                        <div class="m-b-30">
+                                            <a href="add-post.php">
+                                                <button id="addToTable" class="btn btn-success waves-effect waves-light">Add <i class="mdi mdi-plus-circle-outline"></i></button>
+                                            </a>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <table class="table m-0 table-colored-bordered table-bordered-primary">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Details</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $lang_code = $_SESSION['lang_code'];
+                                                    $condition = $limit = $join = '';
+                                                    $fields = "ads.*,ad_descriptions.title,ad_descriptions.description";
+                                                    $condition .= " AND ad_descriptions.lang_code = '$lang_code'";
+                                                    $join .= " LEFT JOIN ad_descriptions ON ad_descriptions.ad_id = ads.ad_id";
+                                                    $query = mysqli_query($con, "Select $fields from ads $join where 1 $condition");
+                                                    $cnt = 1;
+
+                                                    while ($row = mysqli_fetch_array($query)) {
+                                                    ?>
+
+                                                        <tr>
+                                                            <th scope="row"><?php echo htmlentities($cnt); ?></th>
+                                                            <td><?php 
+                                                            if($row['type'] == 'I'){
+                                                                $type = 'Image';
+                                                            }elseif($row['type'] == 'V'){
+                                                                $type = 'Video';
+                                                            }elseif($row['type'] == 'T'){
+                                                                $type = 'Text';
+                                                            }elseif($row['type'] == 'M'){
+                                                                $type = 'MCQ';
+                                                            }
+                                                            echo $row['title'].'<br> Type:'.$type.'<br> Start Date:'.date('m/d/Y',$row['start_date']).'<br> End Date:'.date('m/d/Y',$row['end_date']); 
+                                                            ?></td>
+                                                            <td><?php if($row['status'] == 'D'){
+                                                                        $id=$row['id'];
+                                                                        
+                                                                        echo "Disabled<a href='manage-news.php?ad_id=".$row['ad_id']."&action=change_status&status=A' class='btn btn-success waves-effect waves-light'>Make Active</a>";
+                                                                    }
+                                                                    elseif($row['status'] == 'A'){
+                                                                        echo "Active<a href='manage-news.php?ad_id=".$row['ad_id']."&action=change_status&status=D' class='btn btn-danger waves-effect waves-light'>Make Disable</a>";
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <td><a href="edit-ad.php?ad_id=<?php echo htmlentities($row['ad_id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
+                                                                &nbsp;<a href="manage-ads.php?ad_id=<?php echo htmlentities($row['ad_id']); ?>&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                        </tr>
+                                                    <?php
+                                                        $cnt++;
+                                                    } ?>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
 
 
 
-                    </div> <!-- container -->
 
-                </div> <!-- content -->
+                                    </div>
 
-       <?php include('includes/footer.php');?>
+                                </div>
+
+
+                            </div>
+                            <!--- end row -->
+                        </div> <!-- container -->
+
+                    </div> <!-- content -->
+                    <?php include('includes/footer.php'); ?>
+                </div>
 
             </div>
-
-
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
-
-        </div>
-        <!-- END wrapper -->
+            <!-- END wrapper -->
 
 
 
-        <script>
-            var resizefunc = [];
-        </script>
+            <script>
+                var resizefunc = [];
+            </script>
 
-        <!-- jQuery  -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/detect.js"></script>
-        <script src="assets/js/fastclick.js"></script>
-        <script src="assets/js/jquery.blockUI.js"></script>
-        <script src="assets/js/waves.js"></script>
-        <script src="assets/js/jquery.slimscroll.js"></script>
-        <script src="assets/js/jquery.scrollTo.min.js"></script>
-        <script src="../plugins/switchery/switchery.min.js"></script>
+            <!-- jQuery  -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/detect.js"></script>
+            <script src="assets/js/fastclick.js"></script>
+            <script src="assets/js/jquery.blockUI.js"></script>
+            <script src="assets/js/waves.js"></script>
+            <script src="assets/js/jquery.slimscroll.js"></script>
+            <script src="assets/js/jquery.scrollTo.min.js"></script>
+            <script src="../plugins/switchery/switchery.min.js"></script>
 
-        <!-- CounterUp  -->
-        <script src="../plugins/waypoints/jquery.waypoints.min.js"></script>
-        <script src="../plugins/counterup/jquery.counterup.min.js"></script>
-
-        <!--Morris Chart-->
-		<script src="../plugins/morris/morris.min.js"></script>
-		<script src="../plugins/raphael/raphael-min.js"></script>
-
-        <!-- Load page level scripts-->
-        <script src="../plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-        <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <script src="../plugins/jvectormap/gdp-data.js"></script>
-        <script src="../plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
-
-
-        <!-- Dashboard Init js -->
-		<script src="assets/pages/jquery.blog-dashboard.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/jquery.core.js"></script>
-        <script src="assets/js/jquery.app.js"></script>
+            <!-- App js -->
+            <script src="assets/js/jquery.core.js"></script>
+            <script src="assets/js/jquery.app.js"></script>
 
     </body>
-</html>
+
+    </html>
 <?php } ?>
