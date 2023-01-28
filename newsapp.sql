@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2023 at 08:55 AM
+-- Generation Time: Jan 28, 2023 at 06:26 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -41,7 +41,7 @@ CREATE TABLE `ads` (
 --
 
 INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `status`) VALUES
-(1, 'I', 1673996400, 1674082800, 44, 'A'),
+(1, 'I', 1673996400, 1674082800, 44, 'D'),
 (2, 'I', 1674082800, 1674774000, 12, 'A'),
 (3, 'I', 1674169200, 1674860400, 56, 'A'),
 (4, 'I', 1674169200, 1674860400, 56, 'D'),
@@ -56,7 +56,9 @@ INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `stat
 (13, 'M', 1673996400, 1674774000, 54, 'A'),
 (14, 'M', 1673996400, 1674774000, 54, 'A'),
 (15, 'M', 1673996400, 1674774000, 54, 'A'),
-(16, 'M', 1673996400, 1674774000, 54, 'A');
+(16, 'M', 1673996400, 1674774000, 54, 'A'),
+(17, 'I', 1674687600, 1675378800, 34, 'A'),
+(18, 'I', 1674687600, 1676070000, 34, 'A');
 
 -- --------------------------------------------------------
 
@@ -123,7 +125,13 @@ INSERT INTO `ad_descriptions` (`ad_id`, `title`, `description`, `lang_code`) VAL
 (15, 'dgd', '', 'ur'),
 (16, 'dgd', '', 'ar'),
 (16, 'dgd', '', 'en'),
-(16, 'dgd', '', 'ur');
+(16, 'dgd', '', 'ur'),
+(17, 'Image Test', '', 'ar'),
+(17, 'Image Test', '', 'en'),
+(17, 'Image Test', '', 'ur'),
+(18, 'Test', '', 'ar'),
+(18, 'Test', '', 'en'),
+(18, 'Test', '', 'ur');
 
 -- --------------------------------------------------------
 
@@ -184,6 +192,19 @@ INSERT INTO `mcq_option_descriptions` (`option_id`, `option_text`, `lang_code`) 
 (2, 'fe', 'ar'),
 (2, 'fe', 'en'),
 (2, 'fe', 'ur');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `payment_id` int(11) NOT NULL,
+  `payment` decimal(10,2) NOT NULL,
+  `date` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -323,7 +344,8 @@ INSERT INTO `tblposts` (`id`, `CategoryId`, `PostingDate`, `UpdationDate`, `Post
 (20, 5, '2023-01-13 18:49:21', '2023-01-15 11:41:23', 'yfytd', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'D', 'N'),
 (21, 11, '2023-01-15 09:58:51', '2023-01-15 14:22:03', 'title-of-news-fahad', '1673792523_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N'),
 (22, 11, '2023-01-15 10:37:00', '2023-01-15 11:40:32', 'virat', '6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'D', 'N'),
-(23, 11, '2023-01-15 10:38:01', '2023-01-15 14:23:12', 'virat', '6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N');
+(23, 11, '2023-01-15 10:38:01', '2023-01-15 14:23:12', 'virat', '6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N'),
+(26, 10, '2023-01-26 08:00:49', NULL, 'Thios-is-test-title', '1674720049_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N');
 
 -- --------------------------------------------------------
 
@@ -355,7 +377,10 @@ INSERT INTO `tblpost_descriptions` (`id`, `PostTitle`, `PostDetails`, `lang_code
 (22, 'virat', '<p>gd</p>', 'ur'),
 (23, 'virat', '<p>xvd</p>', 'ar'),
 (23, 'virat', '<p>xvd</p>', 'en'),
-(23, 'virat', '<p>xvd</p>', 'ur');
+(23, 'virat', '<p>xvd</p>', 'ur'),
+(26, 'Thios is test title', '<p>This is news content</p>', 'ar'),
+(26, 'Thios is test title', '<p>This is news content</p>', 'en'),
+(26, 'Thios is test title', '<p>This is news content</p>', 'ur');
 
 -- --------------------------------------------------------
 
@@ -450,6 +475,12 @@ ALTER TABLE `mcq_option_descriptions`
   ADD PRIMARY KEY (`option_id`,`lang_code`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`payment_id`);
+
+--
 -- Indexes for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
@@ -510,13 +541,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ads`
 --
 ALTER TABLE `ads`
-  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `mcq_options`
 --
 ALTER TABLE `mcq_options`
-  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
@@ -540,7 +577,7 @@ ALTER TABLE `tblpages`
 -- AUTO_INCREMENT for table `tblposts`
 --
 ALTER TABLE `tblposts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tblsubcategory`

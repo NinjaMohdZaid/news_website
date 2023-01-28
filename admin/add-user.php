@@ -5,7 +5,7 @@ error_reporting(0);
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
-
+    
     // Code for Add New user
     if (isset($_POST['submit'])) {
         $username = $_POST['username'];

@@ -35,9 +35,7 @@ function upload_video($target_dir){
         move_uploaded_file($_FILES["video"]["tmp_name"], $target_file);
         return true;
         $uploadOk = 1;
-    }
-        
-    
+    } 
 }
 session_start();
 include('includes/config.php');
@@ -100,14 +98,14 @@ if (strlen($_SESSION['login']) == 0) {
                     if($type == 'I' && !empty($_FILES["image"]["name"])){
                         if(!empty($_FILES['image']['name'])){
                             //image upload
-                            $target_dir = "ads/files/images/$id";
+                            $target_dir = "ads/files/images/$ad_id";
                             if (!is_dir($target_dir)) mkdir($target_dir, 0777, true);
                             upload_image($target_dir.'/');
                         }
                     }elseif($type == 'V' && !empty($_FILES["video"]["name"])){
                         if(!empty($_FILES['video']['name'])){
                             //video upload
-                            $target_dir = "ads/files/videos/$id";
+                            $target_dir = "ads/files/videos/$ad_id";
                             if (!is_dir($target_dir)) mkdir($target_dir, 0777, true);
                             upload_video($target_dir.'/');
                         }
@@ -287,7 +285,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <div class="appending_div">
                                                             <div class="form-group m-b-20 ">
                                                                 <label for="options[1]">Option 1</label>
-                                                                <input type="text" class="form-control" name="options[1]" required>
+                                                                <div class="option_div"><input type="text" class="form-control" name="options[1]" required><i class="fa fa-trash" aria-hidden="true"></i></div>
                                                             </div>
                                                         </div>
                                                         <span id="add_more_mcq">Add More +</span>
@@ -408,10 +406,14 @@ if (strlen($_SESSION['login']) == 0) {
                 //add more mcq
                 var i = 2;
                 $('#add_more_mcq').on('click', function() {
-                    var field = '<div class="form-group m-b-20"><label for="options['+i+']">Option '+i+'</label><input type="text" class="form-control" id="options['+i+']" name="options['+i+']" required></div>';
+                    var field = '<div class="form-group m-b-20"><label for="options['+i+']">Option '+i+'</label><div class="option_div"><input type="text" class="form-control" id="options['+i+']" name="options['+i+']" required><i class="fa fa-trash" aria-hidden="true"></i></div></div>';
                     $('.appending_div').append(field);
                     i = i+1;
-                })
+                });
+                //remove div of delete option 
+                $('.option_div i').on('click',function() {
+                    $(this).closest('.form-group').remove();
+                });
             });
         </script>
         <style>
@@ -422,12 +424,31 @@ if (strlen($_SESSION['login']) == 0) {
                 color:black;
                 cursor: pointer;
             }
+            #add_more_mcq {
+                color: gray;
+            }
+
+            #add_more_mcq:hover {
+                color: black;
+                cursor: pointer;
+            }
+
+            .option_div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .option_div i:hover {
+                cursor: pointer;
+                color: red;
+            }
         </style>
         <script src="../plugins/switchery/switchery.min.js"></script>
 
         <!--Summernote js-->
         <script src="../plugins/summernote/summernote.min.js"></script>
-
+        
 
 
 

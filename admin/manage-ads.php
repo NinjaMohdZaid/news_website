@@ -5,20 +5,57 @@ error_reporting(0);
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
-    if ($_GET['action'] == 'del' && $_GET['news_id']) {
-        $id = intval($_GET['news_id']);
-        $query = mysqli_query($con, "update tblposts set is_deleted='Y' where id='$id'");
-        $msg = "News Moved to Recycle Bin";
+    if ($_GET['action'] == 'del' && $_GET['ad_id'] && $_GET['ad_type']) {
+        $ad_id = intval($_GET['ad_id']);
+        $query = mysqli_query($con, "DELETE FROM ads where ad_id='$ad_id'");
+        if(!empty($query)){
+            $_query = mysqli_query($con, "DELETE FROM ad_descriptions where ad_id='$ad_id'");
+            if(!empty($_query)){
+                if($_GET['ad_type'] == 'M'){
+                    $query = mysqli_query($con, "Select option_id from mcq_options where ad_id = $ad_id");
+                    $option_ids = Array();
+                    while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        $option_ids[] =  $row['option_id'];  
+                    }
+                    $option_ids=implode(',',$option_ids);
+                    $query = mysqli_query($con, "DELETE FROM mcq_options where option_id IN($option_ids)");
+                    $_query = mysqli_query($con, "DELETE FROM mcq_option_descriptions where option_id IN($option_ids)");
+                }elseif($_GET['ad_type'] == 'I'){
+                    $target_dir = "ads/files/images/$ad_id";
+                    if (is_dir($target_dir)){
+                        $files = glob($target_dir.'/*'); 
+                        // Deleting all the files in the list
+                        foreach($files as $file) {
+                        if(is_file($file)) 
+                            // Delete the given file
+                            unlink($file); 
+                        }                            
+                    }
+                }elseif($_GET['ad_type'] == 'V'){
+                    $target_dir = "ads/files/videos/$ad_id";
+                    if (is_dir($target_dir)){
+                        $files = glob($target_dir.'/*'); 
+                        // Deleting all the files in the list
+                        foreach($files as $file) {
+                        if(is_file($file)) 
+                            // Delete the given file
+                            unlink($file); 
+                        }                            
+                    }
+                }
+            }
+        }
+        $msg = "Ad has been deleted succesfully";
     }
     // Code for restore
-    if ($_GET['action'] == 'change_status' && !empty($_GET['news_id']) && !empty($_GET['status'])) {
-        $id = intval($_GET['news_id']);
+    if ($_GET['action'] == 'change_status' && !empty($_GET['ad_id']) && !empty($_GET['status'])) {
+        $ad_id = intval($_GET['ad_id']);
         $status = $_GET['status'];
-        $query = mysqli_query($con, "update tblposts set status='$status' where id='$id'");
+        $query = mysqli_query($con, "update ads set status='$status' where ad_id='$ad_id'");
         if($status == 'A'){
-            $msg = "News Approved";
+            $msg = "Ad Activated";
         }else{
-            $msg = "News Disapproved";
+            $msg = "Ad Deactivated";
         }
     }
 
@@ -154,15 +191,15 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <td><?php if($row['status'] == 'D'){
                                                                         $id=$row['id'];
                                                                         
-                                                                        echo "Disabled<a href='manage-news.php?ad_id=".$row['ad_id']."&action=change_status&status=A' class='btn btn-success waves-effect waves-light'>Make Active</a>";
+                                                                        echo "Disabled<a href='manage-ads.php?ad_id=".$row['ad_id']."&action=change_status&status=A' class='btn btn-success waves-effect waves-light'>Make Active</a>";
                                                                     }
                                                                     elseif($row['status'] == 'A'){
-                                                                        echo "Active<a href='manage-news.php?ad_id=".$row['ad_id']."&action=change_status&status=D' class='btn btn-danger waves-effect waves-light'>Make Disable</a>";
+                                                                        echo "Active<a href='manage-ads.php?ad_id=".$row['ad_id']."&action=change_status&status=D' class='btn btn-danger waves-effect waves-light'>Make Disable</a>";
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <td><a href="edit-ad.php?ad_id=<?php echo htmlentities($row['ad_id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
-                                                                &nbsp;<a href="manage-ads.php?ad_id=<?php echo htmlentities($row['ad_id']); ?>&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                                &nbsp;<a href="manage-ads.php?ad_id=<?php echo htmlentities($row['ad_id']); ?>&action=del&ad_type=<?php echo htmlentities($row['type'])?>"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
                                                         </tr>
                                                     <?php
                                                         $cnt++;

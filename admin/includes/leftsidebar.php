@@ -36,7 +36,6 @@
                                     <ul class="list-unstyled">
                                         <li><a href="add-new-ad.php">Create New Ad</a></li>
                                         <li><a href="manage-ads.php">Manage Ads</a></li>
-                                        <li><a href="trash-ads.php">Past Ads</a></li>
                                     </ul>
                                 </li>
 
