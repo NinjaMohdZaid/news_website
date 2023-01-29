@@ -11,12 +11,12 @@ if (strlen($_SESSION['login']) == 0) {
         $users = mysqli_fetch_all($result,MYSQLI_ASSOC);
     }
     if (isset($_POST['submit'])) {
-        $category = $_POST['category'];
-        $description = $_POST['description'];
-        $status = 1;
-        $query = mysqli_query($con, "insert into tblcategory(CategoryName,Description,Is_Active) values('$category','$description','$status')");
+        $user_id = $_POST['user_id'];
+        $payment = $_POST['payment'];
+        $date = strtotime($_POST['date']);
+        $query = mysqli_query($con, "insert into payments(user_id,payment,date) values('$user_id','$payment','$date')");
         if ($query) {
-            $msg = "Category created ";
+            $msg = "Payment added successfully";
         } else {
             $error = "Something went wrong . Please try again.";
         }
@@ -122,7 +122,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <form class="form-horizontal" name="payments" method="post">
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Select User</label>
+                                                    <label for="user_id">Select User</label>
                                                     <select class="form-control" name="user_id" id="user_id" required>
                                                         <?php 
                                                             foreach ($users as $user) {
@@ -135,16 +135,15 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </div>
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Payment Amount</label>
-                                                    <input type="text" class="form-control" value="" name="category" required>
-
+                                                    <label for="payment">Payment Amount</label>
+                                                    <input type="number" step="0.001" class="form-control" value="" name="payment" required>
                                                 </div>
 
 
 
                                                 <div class="form-group m-b-20">
-                                                    <label for="exampleInputEmail1">Payment Date</label>
-                                                    <input type="date" class="form-control" id="postimage" name="postimage" required>
+                                                    <label for="date">Payment Date</label>
+                                                    <input type="date" class="form-control" id="date" name="date" required>
 
                                                 </div>
 

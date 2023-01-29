@@ -2,36 +2,32 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
-if($_GET['action']=='del' && $_GET['rid'])
-{
-	$id=intval($_GET['rid']);
-	$query=mysqli_query($con,"update tblcategory set Is_Active='0' where id='$id'");
-	$msg="Category deleted ";
-}
-// Code for restore
-if($_GET['resid'])
-{
-	$id=intval($_GET['resid']);
-	$query=mysqli_query($con,"update tblcategory set Is_Active='1' where id='$id'");
-	$msg="Category restored successfully";
-}
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
+    if ($_GET['action'] == 'del' && $_GET['rid']) {
+        $id = intval($_GET['rid']);
+        $query = mysqli_query($con, "update tblcategory set Is_Active='0' where id='$id'");
+        $msg = "Category deleted ";
+    }
+    // Code for restore
+    if ($_GET['resid']) {
+        $id = intval($_GET['resid']);
+        $query = mysqli_query($con, "update tblcategory set Is_Active='1' where id='$id'");
+        $msg = "Category restored successfully";
+    }
 
-// Code for Forever deletionparmdel
-if($_GET['action']=='parmdel' && $_GET['rid'])
-{
-	$id=intval($_GET['rid']);
-	$query=mysqli_query($con,"delete from  tblcategory  where id='$id'");
-	$delmsg="Category deleted forever";
-}
+    // Code for Forever deletionparmdel
+    if ($_GET['action'] == 'parmdel' && $_GET['rid']) {
+        $id = intval($_GET['rid']);
+        $query = mysqli_query($con, "delete from  tblcategory  where id='$id'");
+        $delmsg = "Category deleted forever";
+    }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+
     <head>
 
         <title>In 360 News | Payment History</title>
@@ -42,7 +38,7 @@ if($_GET['action']=='parmdel' && $_GET['rid'])
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
 
     </head>
@@ -54,10 +50,10 @@ if($_GET['action']=='parmdel' && $_GET['rid'])
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-<?php include('includes/topheader.php');?>
+            <?php include('includes/topheader.php'); ?>
 
             <!-- ========== Left Sidebar Start ========== -->
-<?php include('includes/leftsidebar.php');?>
+            <?php include('includes/leftsidebar.php'); ?>
             <!-- Left Sidebar End -->
 
 
@@ -72,8 +68,8 @@ if($_GET['action']=='parmdel' && $_GET['rid'])
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
                                     <h4 class="page-title">Payment History</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
@@ -83,131 +79,120 @@ if($_GET['action']=='parmdel' && $_GET['rid'])
                                             <a href="#">Payments </a>
                                         </li>
                                         <li class="active">
-                                           Payment History
+                                            Payment History
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <!-- end row -->
 
 
-<div class="row">
-<div class="col-sm-6">  
- 
-<?php if($msg){ ?>
-<div class="alert alert-success" role="alert">
-<strong>Well done!</strong> <?php echo htmlentities($msg);?>
-</div>
-<?php } ?>
+                        <div class="row">
+                            <div class="col-sm-6">
 
-<?php if($delmsg){ ?>
-<div class="alert alert-danger" role="alert">
-<strong>Oh snap!</strong> <?php echo htmlentities($delmsg);?></div>
-<?php } ?>
+                                <?php if ($msg) { ?>
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                    </div>
+                                <?php } ?>
 
-
-</div>
-                                 
-                                 
-                                    
+                                <?php if ($delmsg) { ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Oh snap!</strong> <?php echo htmlentities($delmsg); ?>
+                                    </div>
+                                <?php } ?>
 
 
-                                   
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="demo-box m-t-20">
 
 
-                                    <div class="row">
-										<div class="col-md-12">
-											<div class="demo-box m-t-20">
+                                        <div class="table-responsive">
+                                            <table class="table m-0 table-colored-bordered table-bordered-primary">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Payment Id</th>
+                                                        <th>User</th>
+                                                        <th>Date</th>
+                                                        <th>Total Amount Paid</th>
 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $join = 'INNER JOIN users ON payments.user_id=users.id';
+                                                    $query = mysqli_query($con, "SELECT payments.*,users.username from payments $join where 1");
+                                                    $cnt = 1;
+                                                    while ($row = mysqli_fetch_array($query)) {
+                                                    ?>
 
-												<div class="table-responsive">
-                                                    <table class="table m-0 table-colored-bordered table-bordered-primary">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th> User</th>
-                                                                <th>Text News Article Count</th>
-                                                          <th>Video News Article Count</th>
-                                                                <th>Date</th>
-                                                                  <th>Total Amount Paid</th>
-                                                                
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-<?php 
-$query=mysqli_query($con,"Select id,CategoryName,Description,PostingDate,UpdationDate from  tblcategory where Is_Active=1");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
-?>
+                                                        <tr>
+                                                            <th scope="row"><?php echo htmlentities($row['payment_id']); ?></th>
+                                                            <td><?php echo htmlentities($row['username']); ?></td>
+                                                            <td><?php echo htmlentities(date("Y-m-d", $row['date'])); ?></td>
+                                                            <td><?php echo htmlentities($row['payment']); ?></td>
 
- <tr>
-<th scope="row"><?php echo htmlentities($cnt);?></th>
-<td><?php echo htmlentities($row['CategoryName']);?></td>
-<td><?php echo htmlentities($row['Description']);?></td>
-<td><?php echo htmlentities($row['PostingDate']);?></td>
-<td><?php echo htmlentities($row['UpdationDate']);?></td>
-<td><?php echo htmlentities($row['UpdationDate']);?></td>
+                                                        </tr>
+                                                    <?php
+                                                        $cnt++;
+                                                    } ?>
+                                                </tbody>
 
-</tr>
-<?php
-$cnt++;
- } ?>
-</tbody>
-                                                  
-                                                    </table>
-                                                </div>
+                                            </table>
+                                        </div>
 
 
 
 
-											</div>
+                                    </div>
 
-										</div>
-
-							
-									</div>
-                                    <!--- end row -->
+                                </div>
 
 
-                                    
-
-                                  
-
-
-
-                                                
-											</div>
-
-										</div>
-
-							
-									</div>                  
-                                  
-
-
-
-                                   
+                            </div>
+                            <!--- end row -->
 
 
 
 
 
 
-                        
+
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
 
 
 
 
 
 
-                    </div> <!-- container -->
 
-                </div> <!-- content -->
-<?php include('includes/footer.php');?>
-            </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+        <?php include('includes/footer.php'); ?>
+        </div>
 
         </div>
         <!-- END wrapper -->
@@ -234,5 +219,6 @@ $cnt++;
         <script src="assets/js/jquery.app.js"></script>
 
     </body>
-</html>
+
+    </html>
 <?php } ?>

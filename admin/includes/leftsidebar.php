@@ -65,7 +65,6 @@
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-money"></i> <span> Payments </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
                                         <li><a href="add-payment.php">Add Payment</a></li>
-                                        <li><a href="manage-payment.php">Pending Payments</a></li>
                                         <li><a href="payment-history.php">Payment History</a></li>
                                     </ul>
                                 </li>

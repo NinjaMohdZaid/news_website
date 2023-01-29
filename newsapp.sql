@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2023 at 06:26 PM
+-- Generation Time: Jan 29, 2023 at 09:38 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -205,6 +205,13 @@ CREATE TABLE `payments` (
   `date` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `payment`, `date`, `user_id`) VALUES
+(1, '45.60', 1674514800, 5);
 
 -- --------------------------------------------------------
 
@@ -435,7 +442,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `userType`, `CreationDate`, `UpdationDate`) VALUES
 (1, 'admin', 'f925916e2754e5e03f75dd58a5733251', 'phpgurukulofficial@gmail.com', 'admin', 'A', '2021-05-26 18:30:00', '2023-01-14 13:18:28'),
-(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'subadmin', 'C', '2021-11-10 18:28:11', '2023-01-14 13:52:06'),
+(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'Content Contributer Name', 'C', '2021-11-10 18:28:11', '2023-01-29 07:32:29'),
 (4, 'suadmin2', 'f925916e2754e5e03f75dd58a5733251', 'sbadmin@test.com', 'sbadmin', 'E', '2021-11-10 18:28:32', '2023-01-14 13:52:13'),
 (5, 'testuser', 'f925916e2754e5e03f75dd58a5733251', 'sales1@siwe.tech', 'ssadmin1', 'C', '2022-12-21 00:07:55', '2023-01-14 14:22:16'),
 (9, 'sub123', '9b569f88da56bc5530c11dca4ea52c58', 'sub123@gmail.com', 'Mohd Zaid', 'M', '2023-01-15 07:48:36', NULL);
@@ -553,7 +560,7 @@ ALTER TABLE `mcq_options`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
