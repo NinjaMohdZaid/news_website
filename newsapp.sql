@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2023 at 09:38 AM
+-- Generation Time: Jan 30, 2023 at 05:39 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -432,6 +432,7 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `userType` char(1) NOT NULL,
+  `phone` int(11) NOT NULL,
   `CreationDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -440,12 +441,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `userType`, `CreationDate`, `UpdationDate`) VALUES
-(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', 'phpgurukulofficial@gmail.com', 'admin', 'A', '2021-05-26 18:30:00', '2023-01-14 13:18:28'),
-(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'Content Contributer Name', 'C', '2021-11-10 18:28:11', '2023-01-29 07:32:29'),
-(4, 'suadmin2', 'f925916e2754e5e03f75dd58a5733251', 'sbadmin@test.com', 'sbadmin', 'E', '2021-11-10 18:28:32', '2023-01-14 13:52:13'),
-(5, 'testuser', 'f925916e2754e5e03f75dd58a5733251', 'sales1@siwe.tech', 'ssadmin1', 'C', '2022-12-21 00:07:55', '2023-01-14 14:22:16'),
-(9, 'sub123', '9b569f88da56bc5530c11dca4ea52c58', 'sub123@gmail.com', 'Mohd Zaid', 'M', '2023-01-15 07:48:36', NULL);
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `userType`, `phone`, `CreationDate`, `UpdationDate`) VALUES
+(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', 'phpgurukulofficial@gmail.com', 'admin', 'A', 0, '2021-05-26 18:30:00', '2023-01-14 13:18:28'),
+(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'Content Contributer Name', 'C', 0, '2021-11-10 18:28:11', '2023-01-29 07:32:29'),
+(4, 'suadmin2', 'f925916e2754e5e03f75dd58a5733251', 'sbadmin@test.com', 'sbadmin', 'E', 0, '2021-11-10 18:28:32', '2023-01-14 13:52:13'),
+(5, 'testuser', 'f925916e2754e5e03f75dd58a5733251', 'sales1@siwe.tech', 'ssadmin1', 'C', 0, '2022-12-21 00:07:55', '2023-01-14 14:22:16'),
+(9, 'sub123', '9b569f88da56bc5530c11dca4ea52c58', 'sub123@gmail.com', 'Mohd Zaid', 'M', 0, '2023-01-15 07:48:36', NULL),
+(10, 'userggg', 'e10adc3949ba59abbe56e057f20f883e', 'test@gmail.com', 'This is end user', 'E', 0, '2023-01-29 08:46:43', NULL);
 
 --
 -- Indexes for dumped tables
@@ -596,7 +598,7 @@ ALTER TABLE `tblsubcategory`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

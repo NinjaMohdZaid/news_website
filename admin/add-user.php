@@ -12,8 +12,9 @@ if (strlen($_SESSION['login']) == 0) {
         $email = $_POST['email'];
         $name = $_POST['name'];
         $password = md5($_POST['pwd']);
+        $phone = $_POST['phone'];
         $usertype = $_POST['userType'];
-        $query = mysqli_query($con, "insert into users(username,email,name,password,userType ) values('$username','$email','$name','$password','$usertype')");
+        $query = mysqli_query($con, "insert into users(username,email,name,password,userType,phone) values('$username','$email','$name','$password','$usertype','$phone')");
         if ($query) {
             echo "<script>alert('User added successfully.');</script>";
             echo "<script type='text/javascript'> document.location = 'add-user; </script>";
@@ -120,6 +121,11 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <label for="exampleInputusername">Username (used for login)</label>
                                                     <input type="text" placeholder="Enter Username" name="username" id="username" class="form-control" pattern="^[a-zA-Z][a-zA-Z0-9-_.]{5,12}$" title="Username must be alphanumeric 6 to 12 chars" onBlur="checkAvailability()" required>
                                                     <span id="user-availability-status" style="font-size:14px;"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="phone">Phone</label>
+                                                    <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" class="form-control" title="Phone" required>
                                                 </div>
 
 
