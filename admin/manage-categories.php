@@ -20,7 +20,12 @@ if (strlen($_SESSION['login']) == 0) {
     // Code for Forever deletionparmdel
     if ($_GET['action'] == 'parmdel' && $_GET['rid']) {
         $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tblcategory  where id='$id'");
+        $_query = mysqli_query($con, "DELETE FROM `tblposts` WHERE CategoryId = '$id'");
+        $_query = mysqli_query($con, "SET FOREIGN_KEY_CHECKS=0");
+        $query = mysqli_query($con, "DELETE FROM `tblcategory` WHERE id='$id'");
+        if(!empty($query)){
+            $query = mysqli_query($con, "DELETE FROM `tblcategory_descriptions` WHERE id='$id'");
+        }
         $delmsg = "Category deleted forever";
     }
 
@@ -165,10 +170,6 @@ if (strlen($_SESSION['login']) == 0) {
 
                                             </table>
                                         </div>
-
-
-
-
                                     </div>
 
                                 </div>
@@ -203,8 +204,12 @@ if (strlen($_SESSION['login']) == 0) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $query = mysqli_query($con, "Select id,CategoryName,Description,PostingDate,UpdationDate from  tblcategory where Is_Active=0");
-                                                    $cnt = 1;
+                                                    $lang_code = $_SESSION['lang_code'];
+                                                    $condition = $limit = $join = '';
+                                                    $fields = "tblcategory.*,tblcategory_descriptions.CategoryName as CategoryName,tblcategory_descriptions.Description as Description";
+                                                    $condition .= " AND tblcategory_descriptions.lang_code = '$lang_code' AND tblcategory.Is_Active=0";
+                                                    $join .= " LEFT JOIN tblcategory_descriptions ON tblcategory_descriptions.id = tblcategory.id";
+                                                    $query = mysqli_query($con, "Select $fields from tblcategory $join where 1 $condition");
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>
 

@@ -82,7 +82,7 @@ if (strlen($_SESSION['login']) == 0) {
                             <div class="col-md-12">
                                 <div class="demo-box m-t-20">
                                     <div class="m-b-30">
-                                        <a href="aadd-subadmins.php">
+                                        <a href="add-user.php">
                                             <button id="addToTable" class="btn btn-success waves-effect waves-light">Add <i class="mdi mdi-plus-circle-outline"></i></button>
                                         </a>
                                     </div>

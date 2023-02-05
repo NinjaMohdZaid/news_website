@@ -2,24 +2,22 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
 
-// Code for Forever deletionparmdel
-if($_GET['action']=='del' && $_GET['rid'])
-{
-	$id=intval($_GET['rid']);
-	$query=mysqli_query($con,"delete from  tbladmin  where id='$id' && userType=0");
-echo "<script>alert('Sub-admin details deleted.');</script>";
-echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'; </script>";
-}
+    // Code for Forever deletionparmdel
+    if ($_GET['action'] == 'del' && $_GET['rid']) {
+        $id = intval($_GET['rid']);
+        $query = mysqli_query($con, "delete from  tbladmin  where id='$id' && userType=0");
+        echo "<script>alert('Sub-admin details deleted.');</script>";
+        echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'; </script>";
+    }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+
     <head>
 
         <title>In 360 News | Approve New Users</title>
@@ -30,7 +28,7 @@ echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
 
     </head>
@@ -42,10 +40,10 @@ echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'
         <div id="wrapper">
 
             <!-- Top Bar Start -->
-<?php include('includes/topheader.php');?>
+            <?php include('includes/topheader.php'); ?>
 
             <!-- ========== Left Sidebar Start ========== -->
-<?php include('includes/leftsidebar.php');?>
+            <?php include('includes/leftsidebar.php'); ?>
             <!-- Left Sidebar End -->
 
 
@@ -60,94 +58,93 @@ echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
                                     <h4 class="page-title">Approve New Users</h4>
                                     <ol class="breadcrumb p-0 m-0">
-                                      
+
                                         <li>
                                             <a href="#">Home</a>
                                         </li>
-										<li>
+                                        <li>
                                             <a href="#">Users</a>
                                         </li>
                                         <li class="active">
-                                           Approve New Users
+                                            Approve New Users
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <!-- end row -->
 
 
 
-                                 
-                                 
-                                    
-
-
-                                   
-
-
-                                    <div class="row">
-										<div class="col-md-12">
-											<div class="demo-box m-t-20">
-<div class="m-b-30">
-<a href="aad-user.php">
-<button id="addToTable" class="btn btn-success waves-effect waves-light">Add <i class="mdi mdi-plus-circle-outline" ></i></button>
-</a>
- </div>
-
-												<div class="table-responsive">
-                                                    <table class="table m-0 table-colored-bordered table-bordered-primary">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th> Username</th>
-                                                                <th>Email</th>
-                                                          
-                                                                <th>Application Date</th>
-                                                                  <th>User Role</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-<?php 
-$query=mysqli_query($con,"Select * from  tbladmin where userType=0");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
-?>
-
- <tr>
-<th scope="row"><?php echo htmlentities($cnt);?></th>
-<td><?php echo htmlentities($row['AdminUserName']);?></td>
-<td><?php echo htmlentities($row['AdminEmailId']);?></td>
-<td><?php echo htmlentities($row['CreationDate']);?></td>
-<td><?php echo htmlentities($row['UpdationDate']);?></td>
-<td><a href="edit-subadmin.php?said=<?php echo htmlentities($row['id']);?>"><i class="fa fa-check" style="color: #29b6f6;"></i></a> 
-	&nbsp;<a href="manage-users.php?rid=<?php echo htmlentities($row['id']);?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
-</tr>
-<?php
-$cnt++;
- } ?>
-</tbody>
-                                                  
-                                                    </table>
-                                                </div>
 
 
 
 
-											</div>
 
-										</div>
 
-							
-									</div>
-                                    <!--- end row -->
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="demo-box m-t-20">
+                                    <div class="m-b-30">
+                                        <a href="add-user.php">
+                                            <button id="addToTable" class="btn btn-success waves-effect waves-light">Add <i class="mdi mdi-plus-circle-outline"></i></button>
+                                        </a>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table m-0 table-colored-bordered table-bordered-primary">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th> Username</th>
+                                                    <th>Email</th>
+
+                                                    <th>Application Date</th>
+                                                    <th>User Role</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $query = mysqli_query($con, "Select * from  tbladmin where userType=0");
+                                                $cnt = 1;
+                                                while ($row = mysqli_fetch_array($query)) {
+                                                ?>
+
+                                                    <tr>
+                                                        <th scope="row"><?php echo htmlentities($cnt); ?></th>
+                                                        <td><?php echo htmlentities($row['AdminUserName']); ?></td>
+                                                        <td><?php echo htmlentities($row['AdminEmailId']); ?></td>
+                                                        <td><?php echo htmlentities($row['CreationDate']); ?></td>
+                                                        <td><?php echo htmlentities($row['UpdationDate']); ?></td>
+                                                        <td><a href="edit-subadmin.php?said=<?php echo htmlentities($row['id']); ?>"><i class="fa fa-check" style="color: #29b6f6;"></i></a>
+                                                            &nbsp;<a href="manage-users.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
+                                                    </tr>
+                                                <?php
+                                                    $cnt++;
+                                                } ?>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!--- end row -->
 
 
 
@@ -157,7 +154,7 @@ $cnt++;
                     </div> <!-- container -->
 
                 </div> <!-- content -->
-<?php include('includes/footer.php');?>
+                <?php include('includes/footer.php'); ?>
             </div>
 
         </div>
@@ -185,5 +182,6 @@ $cnt++;
         <script src="assets/js/jquery.app.js"></script>
 
     </body>
-</html>
+
+    </html>
 <?php } ?>

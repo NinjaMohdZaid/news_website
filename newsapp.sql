@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2023 at 05:39 PM
+-- Generation Time: Feb 05, 2023 at 02:40 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -203,15 +203,18 @@ CREATE TABLE `payments` (
   `payment_id` int(11) NOT NULL,
   `payment` decimal(10,2) NOT NULL,
   `date` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `status` char(1) NOT NULL DEFAULT 'P'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`payment_id`, `payment`, `date`, `user_id`) VALUES
-(1, '45.60', 1674514800, 5);
+INSERT INTO `payments` (`payment_id`, `payment`, `date`, `user_id`, `status`) VALUES
+(1, '45.60', 1674514800, 5, 'A'),
+(2, '56.00', 1676502000, 3, 'P'),
+(3, '45.00', 1675897200, 3, 'A');
 
 -- --------------------------------------------------------
 
@@ -237,7 +240,7 @@ INSERT INTO `tblcategory` (`id`, `PostingDate`, `UpdationDate`, `Is_Active`) VAL
 (7, '2021-06-21 18:30:00', '0000-00-00 00:00:00', 1),
 (8, '2021-11-07 18:17:28', NULL, 1),
 (10, '2023-01-14 07:28:46', NULL, 1),
-(11, '2023-01-14 08:08:26', NULL, 1);
+(11, '2023-01-14 08:08:26', '2023-02-04 13:56:33', 0);
 
 -- --------------------------------------------------------
 
@@ -349,10 +352,7 @@ INSERT INTO `tblposts` (`id`, `CategoryId`, `PostingDate`, `UpdationDate`, `Post
 (18, 3, '2023-01-13 18:45:17', NULL, 'ydyrdy', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
 (19, 5, '2023-01-13 18:47:09', NULL, 'ufyyuyhtdft', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
 (20, 5, '2023-01-13 18:49:21', '2023-01-15 11:41:23', 'yfytd', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'D', 'N'),
-(21, 11, '2023-01-15 09:58:51', '2023-01-15 14:22:03', 'title-of-news-fahad', '1673792523_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N'),
-(22, 11, '2023-01-15 10:37:00', '2023-01-15 11:40:32', 'virat', '6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'D', 'N'),
-(23, 11, '2023-01-15 10:38:01', '2023-01-15 14:23:12', 'virat', '6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N'),
-(26, 10, '2023-01-26 08:00:49', NULL, 'Thios-is-test-title', '1674720049_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'N');
+(26, 10, '2023-01-26 08:00:49', '2023-02-04 14:26:59', 'Thios-is-test-title', '1674720049_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'Y');
 
 -- --------------------------------------------------------
 
@@ -562,13 +562,13 @@ ALTER TABLE `mcq_options`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tblcomments`

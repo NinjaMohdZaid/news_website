@@ -16,13 +16,13 @@
                                     <ul class="list-unstyled">
                                         <li><a href="add-post.php">Add News</a></li>
                                         <li><a href="manage-news.php">Manage News</a></li>
-                                        <li><a href="trash-news.php">Deleted News</a></li>
+                                        <li><a href="trash-news.php">Unapproved News</a></li>
                                     </ul>
                                 </li>
 
 
 
-
+                                <?php if ($_SESSION['utype'] == 'A') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-bars"></i> <span> Category </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
@@ -30,7 +30,6 @@
                                         <li><a href="manage-categories.php">Manage Category</a></li>
                                     </ul>
                                 </li>
-                            <?php if ($_SESSION['utype'] == 'A') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-plus"></i> <span> Ads </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
@@ -47,9 +46,6 @@
                                         <li><a href="manage-users.php">Manage Users</a></li>
                                     </ul>
                                 </li>
-                            <?php endif; ?>
-
-
 
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-comment-o"></i> <span> Comments </span> <span class="menu-arrow"></span></a>
@@ -58,13 +54,13 @@
                                     <li><a href="manage-comments.php">Approved Comments</a></li>
                                 </ul>
                             </li>
-
-                            </li>
+                            <?php endif; ?>
                             <?php if ($_SESSION['utype'] == 'A') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-money"></i> <span> Payments </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
                                         <li><a href="add-payment.php">Add Payment</a></li>
+                                        <li><a href="pending-payment.php">Pending Payment</a></li>
                                         <li><a href="payment-history.php">Payment History</a></li>
                                     </ul>
                                 </li>

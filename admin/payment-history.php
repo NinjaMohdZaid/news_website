@@ -125,7 +125,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <tbody>
                                                     <?php
                                                     $join = 'INNER JOIN users ON payments.user_id=users.id';
-                                                    $query = mysqli_query($con, "SELECT payments.*,users.username from payments $join where 1");
+                                                    $query = mysqli_query($con, "SELECT payments.*,users.username from payments $join where status = 'A'");
                                                     $cnt = 1;
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>
