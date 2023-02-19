@@ -1,0 +1,136 @@
+[14-Dec-2022 11:55:25 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 11:55:25 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 11:57:52 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 11:57:52 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:00:20 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:00:20 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:06:06 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:06:06 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:10:20 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user '	
+siweiat8_newsportal'@'localhost' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 7
+[14-Dec-2022 12:10:20 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:12:32 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user '	
+siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 7
+[14-Dec-2022 12:12:32 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:12:38 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user '	
+siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 7
+[14-Dec-2022 12:12:38 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:12:40 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user '	
+siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 7
+[14-Dec-2022 12:12:40 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:15:35 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:15:35 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:15:37 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:15:37 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:15:38 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:15:38 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/about-us.php:34
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/about-us.php(34): mysqli_query(false, 'select PageTitl...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/about-us.php on line 34
+[14-Dec-2022 12:17:52 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:17:52 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:17:53 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:17:53 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:20:01 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:20:01 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 12:21:18 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 12:21:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 15:15:11 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 15:15:11 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 15:15:55 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 15:15:55 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 15:16:00 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 15:16:00 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[14-Dec-2022 17:20:31 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[14-Dec-2022 17:20:31 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[15-Dec-2022 18:08:47 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[15-Dec-2022 18:08:47 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[15-Dec-2022 18:08:51 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[15-Dec-2022 18:08:51 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
+[15-Dec-2022 18:08:54 UTC] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'siweiat8_newsportal'@'bh-61.webhostbox.net' (using password: NO) in /home4/siweiat8/public_html/in360news/includes/config.php on line 6
+[15-Dec-2022 18:08:54 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, bool given in /home4/siweiat8/public_html/in360news/index.php:54
+Stack trace:
+#0 /home4/siweiat8/public_html/in360news/index.php(54): mysqli_query(false, 'SELECT COUNT(*)...')
+#1 {main}
+  thrown in /home4/siweiat8/public_html/in360news/index.php on line 54
