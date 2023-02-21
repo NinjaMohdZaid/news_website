@@ -10,7 +10,7 @@ if(isset($_POST['login']))
     $uname=$_POST['username'];
     $password=md5($_POST['password']);
     // Fetch data from database on the basis of username/email and password
-    $sql =mysqli_query($con,"SELECT * FROM users WHERE (username='$uname' && password='$password' AND userType = 'A' OR userType = 'M')");
+    $sql =mysqli_query($con,"SELECT * FROM users WHERE username='$uname' AND password='$password' AND (userType = 'A' OR userType = 'M')");
     $num=mysqli_fetch_array($sql);
 if($num>0)
 {
