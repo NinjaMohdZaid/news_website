@@ -5,22 +5,10 @@ error_reporting(0);
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
-    if ($_GET['disid']) {
-        $id = intval($_GET['disid']);
-        $query = mysqli_query($con, "update tblcomments set status='0' where id='$id'");
-        $msg = "Comment unapprove ";
-    }
-    // Code for restore
-    if ($_GET['appid']) {
-        $id = intval($_GET['appid']);
-        $query = mysqli_query($con, "update tblcomments set status='1' where id='$id'");
-        $msg = "Comment approved";
-    }
-
     // Code for deletion
-    if ($_GET['action'] == 'del' && $_GET['rid']) {
-        $id = intval($_GET['rid']);
-        $query = mysqli_query($con, "delete from  tblcomments  where id='$id'");
+    if ($_GET['action'] == 'del' && $_GET['comment_id']) {
+        $id = intval($_GET['comment_id']);
+        $query = mysqli_query($con, "delete from  tblcomments  where comment_id='$id'");
         $delmsg = "Comment deleted forever";
     }
 
@@ -106,14 +94,6 @@ if (strlen($_SESSION['login']) == 0) {
 
 
                             </div>
-
-
-
-
-
-
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="demo-box m-t-20">
@@ -123,18 +103,21 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th> Name</th>
-                                                        <th>Email Id</th>
+                                                        <th> Name</th>.
                                                         <th width="300">Comment</th>
                                                         <th>Status</th>
-                                                        <th>Post / News</th>
-                                                        <th>Posting Date</th>
+                                                        <th>News Id</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $query = mysqli_query($con, "Select * from  tblcomments where tblcomments.status=1");
+                                                    $fields = 'tblcomments.*,users.name,tblpost_descriptions.PostTitle';
+                                                    $join = ' INNER JOIN users ON tblcomments.user_id = users.id';
+                                                    $join .= ' INNER JOIN tblpost_descriptions ON tblcomments.postId = tblpost_descriptions.id';
+                                                    $lang_code = $_SESSION['lang_code'];
+                                                    $condition = " AND tblpost_descriptions.lang_code = '$lang_code'";
+                                                    $query = mysqli_query($con, "Select $fields from  tblcomments $join where status='A' $condition");
                                                     $cnt = 1;
                                                     while ($row = mysqli_fetch_array($query)) {
                                                     ?>
@@ -142,10 +125,9 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <tr>
                                                             <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                             <td><?php echo htmlentities($row['name']); ?></td>
-                                                            <td><?php echo htmlentities($row['email']); ?></td>
                                                             <td><?php echo htmlentities($row['comment']); ?></td>
                                                             <td><?php $st = $row['status'];
-                                                                if ($st == '0') :
+                                                                if ($st == 'N') :
                                                                     echo "Wating for approval";
                                                                 else :
                                                                     echo "Approved";
@@ -153,16 +135,15 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 ?></td>
 
 
-                                                            <td><a href="edit-post.php?pid=<?php echo htmlentities($row['postid']); ?>"><?php echo htmlentities($row['PostTitle']); ?></a> </td>
-                                                            <td><?php echo htmlentities($row['postingDate']); ?></td>
+                                                            <td><a href="edit-news.php?news_id=<?php echo htmlentities($row['postId']); ?>"><?php echo htmlentities($row['PostTitle']); ?></a> </td>
                                                             <td>
-                                                                <?php if ($st == 0) : ?>
+                                                                <!-- <?php if ($st == 0) : ?>
                                                                     <a href="manage-comments.php?disid=<?php echo htmlentities($row['id']); ?>" title="Disapprove this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
                                                                 <?php else : ?>
                                                                     <a href="manage-comments.php?appid=<?php echo htmlentities($row['id']); ?>" title="Approve this comment"><i class="ion-arrow-return-right" style="color: #29b6f6;"></i></a>
-                                                                <?php endif; ?>
+                                                                <?php endif; ?> -->
 
-                                                                &nbsp;<a href="manage-comments.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a>
+                                                                &nbsp;<a href="manage-comments.php?comment_id=<?php echo htmlentities($row['comment_id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a>
                                                             </td>
                                                         </tr>
                                                     <?php

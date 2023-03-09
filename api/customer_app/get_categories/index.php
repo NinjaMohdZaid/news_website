@@ -12,13 +12,13 @@ if(empty($_REQUEST['id'])){
     }else{
         $lang_code = 'en';
     }
-    $news = $obj->fn_get_news($_REQUEST,0,$lang_code);
+    $categories = $obj->fn_get_categories($_REQUEST,0,$lang_code);
 }else{
     if(!empty($_REQUEST['lang_code'])){
         $lang_code = $_REQUEST['lang_code'];
     }else{
         $lang_code = 'en';
     }
-    $news = $obj->fn_get_news_data($_REQUEST['id'],$lang_code);
+    $categories = $obj->fn_get_category_data($_REQUEST['id'],$lang_code);
 }
-echo json_encode($news);
+echo json_encode($categories);

@@ -139,7 +139,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Title</th>
-                                                        <th>Posting Date</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -160,7 +159,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <tr>
                                                             <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                             <td><?php echo htmlentities($row['PostTitle']); ?></td>
-                                                            <td><?php echo htmlentities($row['PostingDate']); ?></td>
                                                             <td><a href="trash-news.php?news_id=<?php echo htmlentities($row['id']); ?>&action=res">Restore</a>
                                                                 &nbsp;<a href="trash-news.php?news_id=<?php echo htmlentities($row['id']); ?>&type=<?php echo htmlentities($row['type']); ?>&action=del">Permanently Deleted</a> </td>
                                                         </tr>

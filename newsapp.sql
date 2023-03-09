@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2023 at 08:34 AM
+-- Generation Time: Mar 09, 2023 at 02:40 PM
 -- Server version: 8.0.31
 -- PHP Version: 7.4.32
 
@@ -263,7 +263,8 @@ CREATE TABLE `tblcategory` (
 
 INSERT INTO `tblcategory` (`id`, `Is_Active`, `timestamp`) VALUES
 (10, 1, 0),
-(11, 0, 0);
+(11, 0, 0),
+(13, 1, 1678357452);
 
 -- --------------------------------------------------------
 
@@ -283,12 +284,12 @@ CREATE TABLE `tblcategory_descriptions` (
 --
 
 INSERT INTO `tblcategory_descriptions` (`id`, `CategoryName`, `Description`, `lang_code`) VALUES
-(10, 'cate yghyuf', 'desc', 'ar'),
-(10, 'cate yghyuf', 'ddd', 'en'),
-(10, 'cate yghyuf', 'descdc', 'ur'),
-(11, 'arcbbh', 'uftftd', 'ar'),
-(11, 'yfyd', 'uftftd', 'en'),
-(11, 'urdu', 'uftftd', 'ur');
+(10, 'Tets', 'desc', 'ar'),
+(10, 'TETS', 'ddd', 'en'),
+(10, 'hhh', 'descdc', 'ur'),
+(11, 'YYt', 'uftftd', 'ar'),
+(11, 'yyhh', 'uftftd', 'en'),
+(11, 'TThhh', 'uftftd', 'ur');
 
 -- --------------------------------------------------------
 
@@ -297,23 +298,25 @@ INSERT INTO `tblcategory_descriptions` (`id`, `CategoryName`, `Description`, `la
 --
 
 CREATE TABLE `tblcomments` (
-  `id` int NOT NULL,
+  `comment_id` int NOT NULL,
   `postId` int DEFAULT NULL,
-  `name` varchar(120) DEFAULT NULL,
-  `email` varchar(150) DEFAULT NULL,
+  `user_id` int NOT NULL,
   `comment` mediumtext,
-  `postingDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int DEFAULT NULL
+  `status` char(1) NOT NULL DEFAULT 'N',
+  `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblcomments`
 --
 
-INSERT INTO `tblcomments` (`id`, `postId`, `name`, `email`, `comment`, `postingDate`, `status`) VALUES
-(1, 12, 'Anuj', 'anuj@gmail.com', 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.', '2021-11-20 18:30:00', 1),
-(2, 12, 'Test user', 'test@gmail.com', 'This is sample text for testing.', '2021-11-20 18:30:00', 1),
-(3, 7, 'ABC', 'abc@test.com', 'This is sample text for testing.', '2021-11-20 18:30:00', 0);
+INSERT INTO `tblcomments` (`comment_id`, `postId`, `user_id`, `comment`, `status`, `timestamp`) VALUES
+(9, 43, 10, 'ssssss', 'A', 333),
+(10, 43, 10, 'ssssssddd', 'A', 333),
+(12, 44, 10, 'ssssssdddxx', 'A', 333),
+(16, 44, 10, 'Test comment for the post', 'A', 1678371082),
+(17, 43, 10, 'Test comment for the post', 'A', 1678371103),
+(18, 44, 3, 'Test hh comment for the post', 'A', 1678372551);
 
 -- --------------------------------------------------------
 
@@ -348,9 +351,8 @@ CREATE TABLE `tblposts` (
   `id` int NOT NULL,
   `CategoryId` int DEFAULT NULL,
   `PostUrl` mediumtext,
-  `viewCounter` int DEFAULT NULL,
+  `viewCounter` int DEFAULT '0',
   `user_id` int NOT NULL,
-  `lastUpdatedBy` varchar(255) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'A',
   `is_deleted` char(1) NOT NULL DEFAULT 'N',
   `type` char(1) NOT NULL,
@@ -361,24 +363,12 @@ CREATE TABLE `tblposts` (
 -- Dumping data for table `tblposts`
 --
 
-INSERT INTO `tblposts` (`id`, `CategoryId`, `PostUrl`, `viewCounter`, `user_id`, `lastUpdatedBy`, `status`, `is_deleted`, `type`, `timestamp`) VALUES
-(26, 10, 'Thios-is-test-title', NULL, 1, NULL, 'A', 'Y', 'I', 0),
-(27, 10, 'virat', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(28, 10, 'test', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(29, 10, 'test-image-article', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(30, 10, 'test-image-article', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(31, 10, 'test-image-article', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(36, 10, 'virat', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(37, 10, 'dfdgfe-mg', NULL, 1, NULL, 'A', 'N', 'I', 0),
-(38, 10, 'aiud7d', NULL, 1, NULL, 'A', 'N', 'V', 0),
-(39, 10, 'ggs', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(40, 10, 'ddd', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(41, 10, 'ddd', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(42, 10, 'ggg', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(43, 10, 'virat', NULL, 1, NULL, 'A', 'N', 'V', 0),
-(44, 10, 'test-text', NULL, 1, NULL, 'A', 'N', 'T', 0),
-(46, 10, 'vdo-tets', NULL, 1, NULL, 'A', 'N', 'V', 0),
-(48, 10, 'test-time', NULL, 1, NULL, 'A', 'N', 'T', 1678349888);
+INSERT INTO `tblposts` (`id`, `CategoryId`, `PostUrl`, `viewCounter`, `user_id`, `status`, `is_deleted`, `type`, `timestamp`) VALUES
+(43, 10, 'virat', NULL, 1, 'A', 'Y', 'V', 0),
+(44, 10, 'test-text', NULL, 1, 'A', 'N', 'T', 0),
+(46, 10, 'vdo-tets', NULL, 1, 'A', 'N', 'V', 0),
+(48, 10, 'test-time', NULL, 1, 'A', 'N', 'T', 1678349888),
+(49, 10, 'Test-for-api', 0, 1, 'A', 'N', 'I', 1678358117);
 
 -- --------------------------------------------------------
 
@@ -398,57 +388,6 @@ CREATE TABLE `tblpost_descriptions` (
 --
 
 INSERT INTO `tblpost_descriptions` (`id`, `PostTitle`, `PostDetails`, `lang_code`) VALUES
-(26, 'Thios is test title', '<p>This is news content</p>', 'ar'),
-(26, 'Thios is test title', '<p>This is news content</p>', 'en'),
-(26, 'Thios is test title', '<p>This is news content</p>', 'ur'),
-(27, 'virat', '<p>ss</p>', 'ar'),
-(27, 'virat', '<p>ss</p>', 'en'),
-(27, 'virat', '<p>ss</p>', 'ur'),
-(28, 'test', '<p>test</p>', 'ar'),
-(28, 'test', '<p>test</p>', 'en'),
-(28, 'test', '<p>test</p>', 'ur'),
-(29, 'test image article', '<p>test content</p>', 'ar'),
-(29, 'test image article', '<p>test content</p>', 'en'),
-(29, 'test image article', '<p>test content</p>', 'ur'),
-(30, 'test image article', '<p>test content</p>', 'ar'),
-(30, 'test image article', '<p>test content</p>', 'en'),
-(30, 'test image article', '<p>test content</p>', 'ur'),
-(31, 'test image article', '<p>test content</p>', 'ar'),
-(31, 'test image article', '<p>test content</p>', 'en'),
-(31, 'test image article', '<p>test content</p>', 'ur'),
-(32, 'test image article', '<p>test content</p>', 'ar'),
-(32, 'test image article', '<p>test content</p>', 'en'),
-(32, 'test image article', '<p>test content</p>', 'ur'),
-(33, 'virat', '<p>dddd</p>', 'ar'),
-(33, 'virat', '<p>dddd</p>', 'en'),
-(33, 'virat', '<p>dddd</p>', 'ur'),
-(34, 'virat', '<p>dddd</p>', 'ar'),
-(34, 'virat', '<p>dddd</p>', 'en'),
-(34, 'virat', '<p>dddd</p>', 'ur'),
-(35, 'virat', '<p>dddd</p>', 'ar'),
-(35, 'virat', '<p>dddd</p>', 'en'),
-(35, 'virat', '<p>dddd</p>', 'ur'),
-(36, 'virat', '<p>dd</p>', 'ar'),
-(36, 'virat', '<p>dd</p>', 'en'),
-(36, 'virat', '<p>dd</p>', 'ur'),
-(37, 'dfdgfe mg', '<p>gg</p>', 'ar'),
-(37, 'dfdgfe mg', '<p>gg</p>', 'en'),
-(37, 'dfdgfe mg', '<p>gg</p>', 'ur'),
-(38, 'aiud7d', '<p>ddd</p>', 'ar'),
-(38, 'aiud7d', '<p>ddd</p>', 'en'),
-(38, 'aiud7d', '<p>ddd</p>', 'ur'),
-(39, 'ggs', '<p>dd</p>', 'ar'),
-(39, 'ggs', '<p>dd</p>', 'en'),
-(39, 'ggs', '<p>dd</p>', 'ur'),
-(40, 'ddd', '<p>dddd</p>', 'ar'),
-(40, 'ddd', '<p>dddd</p>', 'en'),
-(40, 'ddd', '<p>dddd</p>', 'ur'),
-(41, 'ddd', '<p>dddd</p>', 'ar'),
-(41, 'ddd', '<p>dddd</p>', 'en'),
-(41, 'ddd', '<p>dddd</p>', 'ur'),
-(42, 'ggg', '<p>hhh</p>', 'ar'),
-(42, 'ggg', '<p>hhh</p>', 'en'),
-(42, 'ggg', '<p>hhh</p>', 'ur'),
 (43, 'virat', '<p>ggg</p>', 'ar'),
 (43, 'virat', '<p>ggg</p>', 'en'),
 (43, 'virat', '<p>ggg</p>', 'ur'),
@@ -458,9 +397,12 @@ INSERT INTO `tblpost_descriptions` (`id`, `PostTitle`, `PostDetails`, `lang_code
 (46, 'vdo tets', '<p>test video</p>', 'ar'),
 (46, 'vdo tets', '<p>test video</p>', 'en'),
 (46, 'vdo tets', '<p>test video</p>', 'ur'),
-(48, 'test time', '<p>dd</p>', 'ar'),
+(48, 'ar test time', '<p>dd</p>', 'ar'),
 (48, 'test time', '<p>dd</p>', 'en'),
-(48, 'test time', '<p>dd</p>', 'ur');
+(48, 'test time', '<p>dd</p>', 'ur'),
+(49, 'Test for api', '<p>Test api</p>', 'ar'),
+(49, 'Test for api', '<p>Test api</p>', 'en'),
+(49, 'Test for api', '<p>Test api</p>', 'ur');
 
 -- --------------------------------------------------------
 
@@ -554,8 +496,8 @@ ALTER TABLE `tblcategory_descriptions`
 -- Indexes for table `tblcomments`
 --
 ALTER TABLE `tblcomments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`),
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `id` (`comment_id`),
   ADD KEY `postId` (`postId`);
 
 --
@@ -611,13 +553,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tblcomments`
 --
 ALTER TABLE `tblcomments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tblpages`
@@ -629,7 +571,7 @@ ALTER TABLE `tblpages`
 -- AUTO_INCREMENT for table `tblposts`
 --
 ALTER TABLE `tblposts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `users`
