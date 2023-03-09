@@ -2,51 +2,37 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
-if(isset($_POST['submit']))
-{
-//Current Password hashing 
-$password=$_POST['password'];
-$options = ['cost' => 12];
-$hashedpass=password_hash($password, PASSWORD_BCRYPT, $options);
-$adminid=$_SESSION['login'];
-// new password hashing 
-$newpassword=$_POST['newpassword'];
-$newhashedpass=password_hash($newpassword, PASSWORD_BCRYPT, $options);
-
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
-$sql=mysqli_query($con,"SELECT AdminPassword FROM  tbladmin where AdminUserName='$adminid' || AdminEmailId='$adminid'");
-$num=mysqli_fetch_array($sql);
-if($num>0)
-{
- $dbpassword=$num['AdminPassword'];
-
-if (password_verify($password, $dbpassword)) {
-
- $con=mysqli_query($con,"update tbladmin set AdminPassword='$newhashedpass', updationDate='$currentTime' where AdminUserName='$adminid'");
-$msg="Password Changed Successfully !!";
-}
-}
-else
-{
-$error="Old Password not match !!";
-}
-}
-
-
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
+    if (isset($_POST['submit'])) {
+        foreach ($_REQUEST['prices'] as $article_type => $price) {
+            $query = mysqli_query($con, "REPLACE INTO settings(`article_type`,`price`) VALUES('$article_type','$price')");
+        }
+        if ($query) {
+            $msg = "Payment updated successfully";
+        } else {
+            $error = "Something went wrong . Please try again.";
+        }
+    }
+    $query = "SELECT * FROM settings";
+    if (mysqli_query($con, $query)) {
+        $result = mysqli_query($con, $query);
+        $settings = mysqli_fetch_all($result,MYSQLI_ASSOC);
+        $_settings=[];
+        foreach($settings as $key => $setting){
+            $_settings[$setting['article_type']] = $setting['price'];
+        }
+    }
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+
     <head>
 
-        <title>In 360 News | Settings</title>
+        <title>In 360 news | Add Payment</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -56,39 +42,8 @@ $error="Old Password not match !!";
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
-    <script type="text/javascript">
-function valid()
-{
-if(document.chngpwd.password.value=="")
-{
-alert("Current Password Filed is Empty !!");
-document.chngpwd.password.focus();
-return false;
-}
-else if(document.chngpwd.newpassword.value=="")
-{
-alert("New Password Filed is Empty !!");
-document.chngpwd.newpassword.focus();
-return false;
-}
-else if(document.chngpwd.confirmpassword.value=="")
-{
-alert("Confirm Password Filed is Empty !!");
-document.chngpwd.confirmpassword.focus();
-return false;
-}
-else if(document.chngpwd.newpassword.value!= document.chngpwd.confirmpassword.value)
-{
-alert("Password and Confirm Password Field do not match  !!");
-document.chngpwd.confirmpassword.focus();
-return false;
-}
-return true;
-}
-</script>
-
 
     </head>
 
@@ -98,14 +53,14 @@ return true;
         <!-- Begin page -->
         <div id="wrapper">
 
-<!-- Top Bar Start -->
- <?php include('includes/topheader.php');?>
-<!-- Top Bar End -->
+            <!-- Top Bar Start -->
+            <?php include('includes/topheader.php'); ?>
+            <!-- Top Bar End -->
 
 
-<!-- ========== Left Sidebar Start ========== -->
-           <?php include('includes/leftsidebar.php');?>
- <!-- Left Sidebar End -->
+            <!-- ========== Left Sidebar Start ========== -->
+            <?php include('includes/leftsidebar.php'); ?>
+            <!-- Left Sidebar End -->
 
             <div class="content-page">
                 <!-- Start content -->
@@ -114,70 +69,93 @@ return true;
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
                                     <h4 class="page-title">Settings</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
                                             <a href="#">Home</a>
                                         </li>
-                                    
+                                        <li>
+                                            <a href="#">Payments </a>
+                                        </li>
                                         <li class="active">
-                                         Settings
+                                            Add Payment
                                         </li>
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <!-- end row -->
 
 
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box">
-                                    <h4 class="m-t-0 header-title"><b>Settings </b></h4>
+                                    <h4 class="m-t-0 header-title"><b>Settings</b></h4>
                                     <hr />
-                        		
-
-
-<div class="row">
-<div class="col-sm-6">  
-<!---Success Message--->  
-<?php if($msg){ ?>
-<div class="alert alert-success" role="alert">
-<strong>Well done!</strong> <?php echo htmlentities($msg);?>
-</div>
-<?php } ?>
-
-<!---Error Message--->
-<?php if($error){ ?>
-<div class="alert alert-danger" role="alert">
-<strong>Oh snap!</strong> <?php echo htmlentities($error);?></div>
-<?php } ?>
-
-
-</div>
-</div>
 
 
 
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!---Success Message--->
+                                            <?php if ($msg) { ?>
+                                                <div class="alert alert-success" role="alert">
+                                                    <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                                </div>
+                                            <?php } ?>
+
+                                            <!---Error Message--->
+                                            <?php if ($error) { ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
+                                                </div>
+                                            <?php } ?>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form class="form-horizontal" name="payments" method="post">
+                                                <div class="form-group m-b-20">
+                                                    <label for="prices[T]">Price Of Text Article</label>
+                                                    <input type="number" step="0.001" class="form-control" value="<?php echo $_settings['T']; ?>" name="prices[T]" required>
+                                                </div>
+                                                <div class="form-group m-b-20">
+                                                    <label for="prices[I]">Price Of Image Article</label>
+                                                    <input type="number" step="0.001" class="form-control" value="<?php echo $_settings['I']; ?>" name="prices[I]" required>
+                                                </div>
+                                                <div class="form-group m-b-20">
+                                                    <label for="prices[N]">Price Of News Article</label>
+                                                    <input type="number" step="0.001" class="form-control" value="<?php echo $_settings['N']; ?>" name="prices[N]" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                                    <div class="col-md-10">
+                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+
+                                    </div>
 
 
 
-                        				</div>
-
-
-                        			</div>
-
-
-                        			
 
 
 
 
-           
-                       
+
+
 
 
                                 </div>
@@ -190,7 +168,7 @@ return true;
 
                 </div> <!-- content -->
 
-<?php include('includes/footer.php');?>
+                <?php include('includes/footer.php'); ?>
 
             </div>
         </div>
@@ -215,5 +193,6 @@ return true;
         <script src="assets/js/jquery.app.js"></script>
 
     </body>
-</html>
+
+    </html>
 <?php } ?>

@@ -120,6 +120,8 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 $user_type = 'Content Contributor'; 
                                                             }elseif($row['userType'] === 'M'){
                                                                 $user_type = 'Content Moderator'; 
+                                                            }elseif($row['userType'] === 'P'){
+                                                                $user_type = 'Marketing'; 
                                                             }
                                                         echo htmlentities($user_type);
                                                         

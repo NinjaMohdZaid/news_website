@@ -111,7 +111,7 @@ if (strlen($_SESSION['login']) == 0) {
                                     <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
                                     <div class="wigdet-one-content">
                                         <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="Statistics">Manage News</p>
-                                        <?php $query = mysqli_query($con, "select * from tblcategory where Is_Active=1");
+                                        <?php $query = mysqli_query($con, "select * from tblposts where is_deleted='N'");
                                         $countcat = mysqli_num_rows($query);
                                         ?>
 

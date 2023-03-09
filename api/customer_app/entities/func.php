@@ -4,10 +4,10 @@ class news_functions
     private $connection;
     function __construct()
     {
-        $dbhost = "bh-61";
-        $dbuser = "siweiat8_newsportal";
-        $dbpass = "Nb?DCrPJXW.l";
-        $dbname = "siweiat8_newsportal";
+        $dbhost = "localhost";
+        $dbuser = "root";
+        $dbpass = "mysql";
+        $dbname = "newsapp";
 
         $this->connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 

@@ -2,45 +2,42 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{
+if (strlen($_SESSION['login']) == 0) {
+    header('location:index.php');
+} else {
 
-if(isset($_POST['submit']))
-{
-$category=$_POST['category'];
-$description=$_POST['description'];
-$status=1;
-$query=mysqli_query($con,"insert into tblcategory(Is_Active) values('$status')");
-$id = $con->insert_id;//category_id
-if($query)
-{
-    $_languages=mysqli_query($con,"SELECT * FROM languages");
-    $languages = mysqli_fetch_all($_languages,MYSQLI_ASSOC);
-    foreach ($languages as $key => $language) {
-        $lang_code = $language['code'];
-        $_query=mysqli_query($con,"insert into tblcategory_descriptions(id,CategoryName,Description,lang_code) values('$id','$category','$description','$lang_code')");
+    if (isset($_POST['submit'])) {
+        $category = $_POST['category'];
+        $description = $_POST['description'];
+        $status = 1;
+        $timestamp = time();
+        $query = mysqli_query($con, "insert into tblcategory(Is_Active,timestamp) values('$status','$timestamp')");
+        $id = $con->insert_id; //category_id
+        if ($query) {
+            $_languages = mysqli_query($con, "SELECT * FROM languages");
+            $languages = mysqli_fetch_all($_languages, MYSQLI_ASSOC);
+            foreach ($languages as $key => $language) {
+                $lang_code = $language['code'];
+                $_query = mysqli_query($con, "insert into tblcategory_descriptions(id,CategoryName,Description,lang_code) values('$id','$category','$description','$lang_code')");
+            }
+            if ($_query) {
+                $msg = "Category created ";
+            }
+        } else {
+            $error = "Something went wrong . Please try again.";
+        }
     }
-    if($_query){
-        $msg="Category created ";
-    }
-}
-else{
-$error="Something went wrong . Please try again.";    
-} 
-}
 
 
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+
     <head>
 
-        <title>Newsportal | Add Category</title>
+        <title>In 360 News | Add Category</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -50,7 +47,7 @@ $error="Something went wrong . Please try again.";
         <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
         <script src="assets/js/modernizr.min.js"></script>
 
     </head>
@@ -61,14 +58,14 @@ $error="Something went wrong . Please try again.";
         <!-- Begin page -->
         <div id="wrapper">
 
-<!-- Top Bar Start -->
- <?php include('includes/topheader.php');?>
-<!-- Top Bar End -->
+            <!-- Top Bar Start -->
+            <?php include('includes/topheader.php'); ?>
+            <!-- Top Bar End -->
 
 
-<!-- ========== Left Sidebar Start ========== -->
-           <?php include('includes/leftsidebar.php');?>
- <!-- Left Sidebar End -->
+            <!-- ========== Left Sidebar Start ========== -->
+            <?php include('includes/leftsidebar.php'); ?>
+            <!-- Left Sidebar End -->
 
             <div class="content-page">
                 <!-- Start content -->
@@ -77,8 +74,8 @@ $error="Something went wrong . Please try again.";
 
 
                         <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
+                            <div class="col-xs-12">
+                                <div class="page-title-box">
                                     <h4 class="page-title">Add Category</h4>
                                     <ol class="breadcrumb p-0 m-0">
                                         <li>
@@ -93,8 +90,8 @@ $error="Something went wrong . Please try again.";
                                     </ol>
                                     <div class="clearfix"></div>
                                 </div>
-							</div>
-						</div>
+                            </div>
+                        </div>
                         <!-- end row -->
 
 
@@ -103,73 +100,69 @@ $error="Something went wrong . Please try again.";
                                 <div class="card-box">
                                     <h4 class="m-t-0 header-title"><b>Add Category </b></h4>
                                     <hr />
-                        		
-
-
-<div class="row">
-<div class="col-sm-6">  
-<!---Success Message--->  
-<?php if($msg){ ?>
-<div class="alert alert-success" role="alert">
-<strong>Well done!</strong> <?php echo htmlentities($msg);?>
-</div>
-<?php } ?>
-
-<!---Error Message--->
-<?php if($error){ ?>
-<div class="alert alert-danger" role="alert">
-<strong>Oh snap!</strong> <?php echo htmlentities($error);?></div>
-<?php } ?>
-
-
-</div>
-</div>
 
 
 
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!---Success Message--->
+                                            <?php if ($msg) { ?>
+                                                <div class="alert alert-success" role="alert">
+                                                    <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
+                                                </div>
+                                            <?php } ?>
+
+                                            <!---Error Message--->
+                                            <?php if ($error) { ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
+                                                </div>
+                                            <?php } ?>
 
 
-                        			<div class="row">
-                        				<div class="col-md-6">
-                        					<form class="form-horizontal" name="category" method="post">
-	                                            <div class="form-group">
-	                                                <label class="col-md-2 control-label">Category</label>
-	                                                <div class="col-md-10">
-	                                                    <input type="text" class="form-control" value="" name="category" required>
-	                                                </div>
-	                                            </div>
-	                                     
-	                                            <div class="form-group">
-	                                                <label class="col-md-2 control-label">Category Description</label>
-	                                                <div class="col-md-10">
-	                                                    <textarea class="form-control" rows="5" name="description" required></textarea>
-	                                                </div>
-	                                            </div>
-
-        <div class="form-group">
-                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form class="form-horizontal" name="category" method="post">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Category</label>
                                                     <div class="col-md-10">
-                                                  
-                                                <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">
-                                                    Submit
-                                                </button>
+                                                        <input type="text" class="form-control" value="" name="category" required>
                                                     </div>
                                                 </div>
 
-	                                        </form>
-                        				</div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Category Description</label>
+                                                    <div class="col-md-10">
+                                                        <textarea class="form-control" rows="5" name="description" required></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">&nbsp;</label>
+                                                    <div class="col-md-10">
+
+                                                        <button type="submit" class="btn btn-custom waves-effect waves-light btn-md" name="submit">
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
 
 
-                        			</div>
-
-
-                        			
+                                    </div>
 
 
 
 
-           
-                       
+
+
+
+
+
 
 
                                 </div>
@@ -182,7 +175,7 @@ $error="Something went wrong . Please try again.";
 
                 </div> <!-- content -->
 
-<?php include('includes/footer.php');?>
+                <?php include('includes/footer.php'); ?>
 
             </div>
         </div>
@@ -207,5 +200,6 @@ $error="Something went wrong . Please try again.";
         <script src="assets/js/jquery.app.js"></script>
 
     </body>
-</html>
+
+    </html>
 <?php } ?>

@@ -12,33 +12,108 @@ if (strlen($_SESSION['login']) == 0) {
         $status = $_POST['status'];
         $PostTitle = $_POST['PostTitle'];
         $PostDetails = $_POST['PostDetails'];
-       
-        $PostImage = $_POST['img'];
-        // Validation for allowed extensions .in_array() function searches an array for a specific value.
-        if(!empty($_FILES["postimage"]["name"])) {
-            $imgfile = $_FILES["postimage"]["name"];
+        $type = $_POST['type'];
+        if ($type == 'I' && !empty($_FILES["image"]["name"])) {
+            $imgfile = $_FILES["image"]["name"];
+            // get the image extension
             $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
             // allowed extensions
             $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+            // Validation for allowed extensions .in_array() function searches an array for a specific value.
             if (!in_array($extension, $allowed_extensions)) {
-                echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
-            }else{
-                if(!empty($_POST['img'])){
-                    unlink("postimages/".$_POST['img']);
-                }
-                // get the image extension
-                $extension = substr($imgfile, strlen($imgfile) - 4, strlen($imgfile));
-                //rename the image file
-                $PostImage = $imgnewfile = time()."_".md5($imgfile) . $extension;
-                // Code for move image into directory
-                move_uploaded_file($_FILES["postimage"]["tmp_name"], "postimages/" . $imgnewfile);
+                $is_error = true;
+                $error = "Invalid format. Only jpg / jpeg/ png /gif format allowed";
             }
-           
+        } elseif ($type == 'V' && !empty($_FILES["video"]["name"])) {
+            $videoFile = $_FILES["video"]["name"];
+            // get the image extension
+            $extension = substr($videoFile, strlen($videoFile) - 4, strlen($videoFile));
+            // allowed extensions
+            $allowed_extensions = array(".WEBM", ".MPG", ".MP2", ".MPEG", ".MPE", ".MPV", ".OGG", ".MP4", ".M4P", ".M4V", ".AVI", ".WMV", ".MOV", ".QT", ".FLV", ".SWF", ".webm", ".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".ogg", ".mp4", ".m4p", ".m4v", ".avi", ".wmv", ".mov", ".qt", ".flv", ".swf", ".3gp");
+            // Validation for allowed extensions .in_array() function searches an array for a specific value.
+            if (!in_array($extension, $allowed_extensions)) {
+                $is_error = true;
+                $error = "Invalid format of the video";
+            }
         }
-        $query = mysqli_query($con,"UPDATE tblposts SET `CategoryId`='$catid',`status` = '$status',`PostImage`='$PostImage' WHERE id=$id");
+
+        if ($is_error) {
+            echo $error;
+        } else {
+            function upload_image($target_dir){
+                // die(var_dump($_FILES));
+                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["image"]["tmp_name"]);
+                if($check !== false) {
+                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                        && $imageFileType != "gif" ) {
+                        return false;
+                        $uploadOk = 0;
+                    }else{
+                        move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                        return true;
+                        $uploadOk = 1;
+                    }
+                    
+                } else {
+                    return false;
+                    $uploadOk = 0;
+                }
+            }
+            function upload_video($target_dir){
+                // die(var_dump($_FILES));
+                $target_file = $target_dir . basename($_FILES["video"]["name"]);
+                $uploadOk = 1;
+                $videoFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                if($videoFileType != "mp4" && $videoFileType != "mpv" && $videoFileType != "avi"
+                    && $videoFileType != "3gp" ) {
+                    return false;
+                    $uploadOk = 0;
+                }else{
+                    move_uploaded_file($_FILES["video"]["tmp_name"], $target_file);
+                    return true;
+                    $uploadOk = 1;
+                } 
+            }
+        }
+        $query = mysqli_query($con,"UPDATE tblposts SET `CategoryId`='$catid',`status` = '$status' WHERE id=$id");
         if (!empty($query)) {
             $_query = mysqli_query($con,"REPLACE INTO tblpost_descriptions(`id`,`PostTitle`,`PostDetails`,`lang_code`) VALUES('$id','$PostTitle','$PostDetails','$lang_code')");
             if(!empty($_query)){
+                if ($type == 'I' && !empty($_FILES["image"]["name"])) {
+                    if (!empty($_FILES['image']['name'])) {
+                        //image upload
+                        $target_dir = "posts/files/images/$id";
+                        if (is_dir($target_dir)){
+                        $files = glob($target_dir.'/*'); 
+                        // Deleting all the files in the list
+                        foreach($files as $file) {
+                            if(is_file($file)) 
+                            // Delete the given file
+                            unlink($file); 
+                        }                            
+                        }
+                        upload_image($target_dir . '/');
+                    }
+                } elseif ($type == 'V' && !empty($_FILES["video"]["name"])) {
+                    if (!empty($_FILES['video']['name'])) {
+                        $target_dir = "posts/files/videos/$id";
+                        if (is_dir($target_dir)){
+                            $files = glob($target_dir.'/*'); 
+                            // Deleting all the files in the list
+                            foreach($files as $file) {
+                            if(is_file($file)) 
+                                // Delete the given file
+                                unlink($file); 
+                            }                            
+                        }
+                        
+                        upload_video($target_dir . '/');
+                    }
+                }
                 $msg = "Post updated";
             }
         } else {
@@ -162,14 +237,19 @@ if (strlen($_SESSION['login']) == 0) {
                                     <div class="p-6">
                                         <div class="">
                                             <form name="editpost" method="post" enctype="multipart/form-data">
-                                            <input type="hidden" name="img" value="<?php echo htmlentities($row['PostImage']); ?>">
+                                            <div class="form-group m-b-20">
+                                                <label for="exampleInputEmail1">News Type</label>
+                                                <input type="hidden" name="type" value="<?php echo htmlentities($row['type']); ?>">
+                                                <select name="type" id="type" class="form-control" required disabled>
+                                                    <option value="T" <?php if ($row['type'] == 'T') echo 'selected' ?> target_id="text_dependent_field">Text</option>
+                                                    <option value="I" <?php if ($row['type'] == 'I') echo 'selected' ?> target_id="image_dependent_field">Image</option>
+                                                    <option value="V" <?php if ($row['type'] == 'V') echo 'selected' ?> target_id="video_dependent_field">Video</option>
+                                                </select>
+                                            </div>
                                                 <div class="form-group m-b-20">
                                                     <label for="PostTitle">Post Title</label>
                                                     <input type="text" class="form-control" id="PostTitle" value="<?php echo htmlentities($row['PostTitle']); ?>" name="PostTitle" placeholder="Enter title" required>
                                                 </div>
-
-
-
                                                 <div class="form-group m-b-20">
                                                     <label for="category_id">Category</label>
                                                     <select class="form-control" name="category_id" id="category" onChange="getSubCat(this.value);" required>
@@ -206,22 +286,49 @@ if (strlen($_SESSION['login']) == 0) {
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="card-box">
-                                                            <h4 class="m-b-30 m-t-0 header-title"><b>Post Image</b></h4>
-                                                            <img src="postimages/<?php echo htmlentities($row['PostImage']); ?>" width="300" />
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="card-box">
-                                                                        <h4 class="m-b-30 m-t-0 header-title"><b>Update Image</b></h4>
-                                                                        <input type="file" class="form-control" id="postimage" name="postimage">
-                                                                    </div>
+                                                <?php
+                                                if ($row['type'] == 'V') {
+                                                    $dir = "posts/files/videos/" . $_REQUEST['news_id'];
+                                                    if (is_dir($dir)) {
+                                                        $dir_data = scandir($dir, 1);
+                                                        $video = reset($dir_data);
+                                                    }
+                                                ?>
+                                                    <div class="form-group m-b-20">
+                                                        <video width="320" height="240" controls>
+                                                            <source src="<?php echo $dir . '/' . $video ?>">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                        <div class="row dependent_field" id="video_dependent_field">
+                                                            <div class="col-sm-12">
+                                                                <div class="card-box">
+                                                                    <h4 class="m-b-30 m-t-0 header-title"><b>Update Video</b></h4>
+                                                                    <input type="file" class="form-control" id="video" name="video" accept="video/*">
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
-                                                </div>
+                                                <?php } elseif ($row['type'] == 'I') {
+                                                    $dir = "posts/files/images/" . $_REQUEST['news_id'];
+                                                    if (is_dir($dir)) {
+                                                        $dir_data = scandir($dir, 1);
+                                                        $image = reset($dir_data);
+                                                    }
+                                                ?>
+                                                    <div class="form-group m-t-0 m-b-30">
+                                                        <img width="200px;" src="<?php echo $dir . '/' . $image ?>">
+                                                        <div class="row dependent_field" id="image_dependent_field">
+                                                            <div class="col-sm-12">
+                                                                <div class="card-box">
+                                                                    <h4 class="m-b-30 m-t-0 header-title"><b>Update Image</b></h4>
+                                                                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            <?php } ?>
 
                                             <?php } ?>
 

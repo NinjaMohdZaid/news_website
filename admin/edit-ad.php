@@ -372,7 +372,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 ?>
                                                     <div class="form-group m-t-0 m-b-30">
                                                         <img width="200px;" src="<?php echo $dir . '/' . $image ?>">
-                                                        <div class="row dependent_field" id="video_dependent_field">
+                                                        <div class="row dependent_field" id="image_dependent_field">
                                                             <div class="col-sm-12">
                                                                 <div class="card-box">
                                                                     <h4 class="m-b-30 m-t-0 header-title"><b>Update Image</b></h4>

@@ -10,16 +10,13 @@ function upload_image($target_dir){
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif" ) {
             return false;
-            $uploadOk = 0;
         }else{
             move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
             return true;
-            $uploadOk = 1;
         }
         
     } else {
         return false;
-        $uploadOk = 0;
     }
 }
 function upload_video($target_dir){
@@ -30,11 +27,9 @@ function upload_video($target_dir){
     if($videoFileType != "mp4" && $videoFileType != "mpv" && $videoFileType != "avi"
         && $videoFileType != "3gp" ) {
         return false;
-        $uploadOk = 0;
     }else{
         move_uploaded_file($_FILES["video"]["tmp_name"], $target_file);
         return true;
-        $uploadOk = 1;
     } 
 }
 session_start();
@@ -264,7 +259,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="col-sm-12">
                                                     <div class="card-box">
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Attach Image</b></h4>
-                                                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                                                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,7 +268,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <div class="col-sm-12">
                                                     <div class="card-box">
                                                         <h4 class="m-b-30 m-t-0 header-title"><b>Attach Video</b></h4>
-                                                        <input type="file" class="form-control" id="video" name="video" accept="video/*" required>
+                                                        <input type="file" class="form-control" id="video" name="video" accept="video/*">
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,7 +280,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <div class="appending_div">
                                                             <div class="form-group m-b-20 ">
                                                                 <label for="options[1]">Option 1</label>
-                                                                <div class="option_div"><input type="text" class="form-control" name="options[1]" required><i class="fa fa-trash" aria-hidden="true"></i></div>
+                                                                <div class="option_div"><input type="text" class="form-control" name="options[1]"><i class="fa fa-trash" aria-hidden="true"></i></div>
                                                             </div>
                                                         </div>
                                                         <span id="add_more_mcq">Add More +</span>

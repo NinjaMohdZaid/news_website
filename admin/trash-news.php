@@ -10,14 +10,34 @@ if (strlen($_SESSION['login']) == 0) {
         $query = mysqli_query($con, "update tblposts set is_deleted='N' where id='$id'");
         $msg = "News Has Been Recycled";
     }
-    if ($_GET['action'] == 'del' && $_GET['news_id']) {
+    if ($_GET['action'] == 'del' && $_GET['news_id'] && $_GET['type']) {
         $id = intval($_GET['news_id']);
         $query = mysqli_query($con, "DELETE FROM tblposts where id='$id'");
         if(!empty($query)){
             $_query = mysqli_query($con, "DELETE FROM tblpost_descriptions where id='$id'");
             if(!empty($_query)){
-                if(!empty($_GET['img'])){
-                    unlink("postimages/".$_GET['img']);
+                if($_GET['type'] == 'I'){
+                    $target_dir = "posts/files/images/$id";
+                    if (is_dir($target_dir)){
+                        $files = glob($target_dir.'/*'); 
+                        // Deleting all the files in the list
+                        foreach($files as $file) {
+                        if(is_file($file)) 
+                            // Delete the given file
+                            unlink($file); 
+                        }                            
+                    }
+                }elseif($_GET['type'] == 'V'){
+                    $target_dir = "posts/files/videos/$id";
+                    if (is_dir($target_dir)){
+                        $files = glob($target_dir.'/*'); 
+                        // Deleting all the files in the list
+                        foreach($files as $file) {
+                        if(is_file($file)) 
+                            // Delete the given file
+                            unlink($file); 
+                        }                            
+                    }
                 }
             }
             $msg = "News Has Been Permanently deleted";
@@ -142,7 +162,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <td><?php echo htmlentities($row['PostTitle']); ?></td>
                                                             <td><?php echo htmlentities($row['PostingDate']); ?></td>
                                                             <td><a href="trash-news.php?news_id=<?php echo htmlentities($row['id']); ?>&action=res">Restore</a>
-                                                                &nbsp;<a href="trash-news.php?&img=<?php echo htmlentities($row['PostImage']); ?>&news_id=<?php echo htmlentities($row['id']); ?>&action=del">Permanently Deleted</a> </td>
+                                                                &nbsp;<a href="trash-news.php?news_id=<?php echo htmlentities($row['id']); ?>&type=<?php echo htmlentities($row['type']); ?>&action=del">Permanently Deleted</a> </td>
                                                         </tr>
                                                     <?php
                                                         $cnt++;
