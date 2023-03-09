@@ -28,7 +28,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title>Newsportal | Add Category</title>
+        <title>In 360 News | Add Category</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

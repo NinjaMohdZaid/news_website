@@ -120,7 +120,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Title</th>
-                                                        <th>Posting Date</th>
                                                         <th>Approve/Disapprove</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -142,14 +141,13 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <tr>
                                                             <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                             <td><?php echo htmlentities($row['PostTitle']); ?></td>
-                                                            <td><?php echo htmlentities($row['PostingDate']); ?></td>
                                                             <td><?php if($row['status'] == 'D'){
                                                                         $id=$row['id'];
 
                                                                         echo "<a href='manage-news.php?news_id=".$row['id']."&action=change_status&status=A'><i class='fa fa-thumbs-up' style='color: #29b6f6;'></i></a>";
                                                                     }
                                                                     elseif($row['status'] == 'A'){
-                                                                        echo "<a href='manage-news.php?news_id=".$row['id']."&action=change_status&status=D'><i class='fa fa-thumbs-down' style='color: #f6293c;'></i></a>";
+                                                                        echo "<a href='manage-news.php?news_id=".htmlentities($row['id'])."&action=del'><i class='fa fa-thumbs-down' style='color: #f6293c;'></i></a>";
                                                                     }
                                                                 ?>
                                                             </td>

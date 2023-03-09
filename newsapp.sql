@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 05, 2023 at 02:40 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: localhost
+-- Generation Time: Mar 09, 2023 at 02:40 PM
+-- Server version: 8.0.31
+-- PHP Version: 7.4.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ads` (
-  `ad_id` int(11) NOT NULL,
+  `ad_id` int NOT NULL,
   `type` char(1) NOT NULL,
-  `start_date` int(11) NOT NULL,
-  `end_date` int(11) NOT NULL,
-  `frequency` int(11) NOT NULL,
+  `start_date` int NOT NULL,
+  `end_date` int NOT NULL,
+  `frequency` int NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -49,7 +49,6 @@ INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `stat
 (6, 'V', 1674169200, 1674860400, 56, 'A'),
 (7, 'V', 1674169200, 1674860400, 56, 'A'),
 (8, 'V', 1674169200, 1674860400, 56, 'A'),
-(9, 'I', 1674428400, 1674774000, 56, 'D'),
 (10, 'M', 1673910000, 1674082800, 4, 'A'),
 (11, 'M', 1673910000, 1674082800, 4, 'A'),
 (12, 'M', 1673910000, 1674082800, 4, 'A'),
@@ -58,7 +57,10 @@ INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `stat
 (15, 'M', 1673996400, 1674774000, 54, 'A'),
 (16, 'M', 1673996400, 1674774000, 54, 'A'),
 (17, 'I', 1674687600, 1675378800, 34, 'A'),
-(18, 'I', 1674687600, 1676070000, 34, 'A');
+(18, 'I', 1674687600, 1676070000, 34, 'A'),
+(21, 'I', 1677369600, 1677542400, 4, 'A'),
+(22, 'T', 1677369600, 1677542400, 4, 'A'),
+(23, 'I', 1677456000, 1677628800, 5, 'A');
 
 -- --------------------------------------------------------
 
@@ -67,7 +69,7 @@ INSERT INTO `ads` (`ad_id`, `type`, `start_date`, `end_date`, `frequency`, `stat
 --
 
 CREATE TABLE `ad_descriptions` (
-  `ad_id` int(11) NOT NULL,
+  `ad_id` int NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` longtext NOT NULL,
   `lang_code` char(2) NOT NULL
@@ -102,9 +104,6 @@ INSERT INTO `ad_descriptions` (`ad_id`, `title`, `description`, `lang_code`) VAL
 (8, 'hgfty', '', 'ar'),
 (8, 'hgfty', '', 'en'),
 (8, 'hgfty', '', 'ur'),
-(9, 'gyf', '', 'ar'),
-(9, 'gyf', '', 'en'),
-(9, 'gyf', '', 'ur'),
 (10, 'This is question', '', 'ar'),
 (10, 'This is question', '', 'en'),
 (10, 'This is question', '', 'ur'),
@@ -131,7 +130,16 @@ INSERT INTO `ad_descriptions` (`ad_id`, `title`, `description`, `lang_code`) VAL
 (17, 'Image Test', '', 'ur'),
 (18, 'Test', '', 'ar'),
 (18, 'Test', '', 'en'),
-(18, 'Test', '', 'ur');
+(18, 'Test', '', 'ur'),
+(21, 'text ad', '', 'ar'),
+(21, 'text ad', '', 'en'),
+(21, 'text ad', '', 'ur'),
+(22, 'ttt', '<p>rrr</p>', 'ar'),
+(22, 'ttt', '<p>rrr</p>', 'en'),
+(22, 'ttt', '<p>rrr</p>', 'ur'),
+(23, 'img test', '', 'ar'),
+(23, 'img test', '', 'en'),
+(23, 'img test', '', 'ur');
 
 -- --------------------------------------------------------
 
@@ -140,8 +148,8 @@ INSERT INTO `ad_descriptions` (`ad_id`, `title`, `description`, `lang_code`) VAL
 --
 
 CREATE TABLE `languages` (
-  `language` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `code` char(2) CHARACTER SET utf8 NOT NULL
+  `language` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `code` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -160,8 +168,8 @@ INSERT INTO `languages` (`language`, `code`) VALUES
 --
 
 CREATE TABLE `mcq_options` (
-  `option_id` int(11) NOT NULL,
-  `ad_id` int(11) NOT NULL
+  `option_id` int NOT NULL,
+  `ad_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -179,7 +187,7 @@ INSERT INTO `mcq_options` (`option_id`, `ad_id`) VALUES
 --
 
 CREATE TABLE `mcq_option_descriptions` (
-  `option_id` int(11) NOT NULL,
+  `option_id` int NOT NULL,
   `option_text` text NOT NULL,
   `lang_code` char(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -200,10 +208,10 @@ INSERT INTO `mcq_option_descriptions` (`option_id`, `option_text`, `lang_code`) 
 --
 
 CREATE TABLE `payments` (
-  `payment_id` int(11) NOT NULL,
+  `payment_id` int NOT NULL,
   `payment` decimal(10,2) NOT NULL,
-  `date` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `date` int NOT NULL,
+  `user_id` int NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'P'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -213,8 +221,29 @@ CREATE TABLE `payments` (
 
 INSERT INTO `payments` (`payment_id`, `payment`, `date`, `user_id`, `status`) VALUES
 (1, '45.60', 1674514800, 5, 'A'),
-(2, '56.00', 1676502000, 3, 'P'),
-(3, '45.00', 1675897200, 3, 'A');
+(2, '56.00', 1676502000, 3, 'A'),
+(3, '45.00', 1675897200, 3, 'A'),
+(4, '5.00', 1677542400, 3, 'P');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `article_type` char(1) COLLATE utf8mb4_general_ci NOT NULL,
+  `price` decimal(10,3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`article_type`, `price`) VALUES
+('I', '65.004'),
+('N', '449.000'),
+('T', '6999.000');
 
 -- --------------------------------------------------------
 
@@ -223,24 +252,19 @@ INSERT INTO `payments` (`payment_id`, `payment`, `date`, `user_id`, `status`) VA
 --
 
 CREATE TABLE `tblcategory` (
-  `id` int(11) NOT NULL,
-  `PostingDate` timestamp NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `Is_Active` int(1) DEFAULT NULL
+  `id` int NOT NULL,
+  `Is_Active` int DEFAULT NULL,
+  `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblcategory`
 --
 
-INSERT INTO `tblcategory` (`id`, `PostingDate`, `UpdationDate`, `Is_Active`) VALUES
-(3, '2021-06-05 18:30:00', '2021-06-13 18:30:00', 1),
-(5, '2021-06-13 18:30:00', '2021-06-13 18:30:00', 1),
-(6, '2021-06-21 18:30:00', '0000-00-00 00:00:00', 1),
-(7, '2021-06-21 18:30:00', '0000-00-00 00:00:00', 1),
-(8, '2021-11-07 18:17:28', NULL, 1),
-(10, '2023-01-14 07:28:46', NULL, 1),
-(11, '2023-01-14 08:08:26', '2023-02-04 13:56:33', 0);
+INSERT INTO `tblcategory` (`id`, `Is_Active`, `timestamp`) VALUES
+(10, 1, 0),
+(11, 0, 0),
+(13, 1, 1678357452);
 
 -- --------------------------------------------------------
 
@@ -249,7 +273,7 @@ INSERT INTO `tblcategory` (`id`, `PostingDate`, `UpdationDate`, `Is_Active`) VAL
 --
 
 CREATE TABLE `tblcategory_descriptions` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `CategoryName` varchar(255) NOT NULL,
   `Description` text NOT NULL,
   `lang_code` char(2) NOT NULL
@@ -260,12 +284,12 @@ CREATE TABLE `tblcategory_descriptions` (
 --
 
 INSERT INTO `tblcategory_descriptions` (`id`, `CategoryName`, `Description`, `lang_code`) VALUES
-(10, 'cate yghyuf', 'desc', 'ar'),
-(10, 'cate yghyuf', 'desc', 'en'),
-(10, 'cate yghyuf', 'descdc', 'ur'),
-(11, 'arcbbh', 'uftftd', 'ar'),
-(11, 'yfyd', 'uftftd', 'en'),
-(11, 'urdu', 'uftftd', 'ur');
+(10, 'Tets', 'desc', 'ar'),
+(10, 'TETS', 'ddd', 'en'),
+(10, 'hhh', 'descdc', 'ur'),
+(11, 'YYt', 'uftftd', 'ar'),
+(11, 'yyhh', 'uftftd', 'en'),
+(11, 'TThhh', 'uftftd', 'ur');
 
 -- --------------------------------------------------------
 
@@ -274,23 +298,25 @@ INSERT INTO `tblcategory_descriptions` (`id`, `CategoryName`, `Description`, `la
 --
 
 CREATE TABLE `tblcomments` (
-  `id` int(11) NOT NULL,
-  `postId` int(11) DEFAULT NULL,
-  `name` varchar(120) DEFAULT NULL,
-  `email` varchar(150) DEFAULT NULL,
-  `comment` mediumtext DEFAULT NULL,
-  `postingDate` timestamp NULL DEFAULT current_timestamp(),
-  `status` int(1) DEFAULT NULL
+  `comment_id` int NOT NULL,
+  `postId` int DEFAULT NULL,
+  `user_id` int NOT NULL,
+  `comment` mediumtext,
+  `status` char(1) NOT NULL DEFAULT 'N',
+  `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblcomments`
 --
 
-INSERT INTO `tblcomments` (`id`, `postId`, `name`, `email`, `comment`, `postingDate`, `status`) VALUES
-(1, 12, 'Anuj', 'anuj@gmail.com', 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.', '2021-11-20 18:30:00', 1),
-(2, 12, 'Test user', 'test@gmail.com', 'This is sample text for testing.', '2021-11-20 18:30:00', 1),
-(3, 7, 'ABC', 'abc@test.com', 'This is sample text for testing.', '2021-11-20 18:30:00', 0);
+INSERT INTO `tblcomments` (`comment_id`, `postId`, `user_id`, `comment`, `status`, `timestamp`) VALUES
+(9, 43, 10, 'ssssss', 'A', 333),
+(10, 43, 10, 'ssssssddd', 'A', 333),
+(12, 44, 10, 'ssssssdddxx', 'A', 333),
+(16, 44, 10, 'Test comment for the post', 'A', 1678371082),
+(17, 43, 10, 'Test comment for the post', 'A', 1678371103),
+(18, 44, 3, 'Test hh comment for the post', 'A', 1678372551);
 
 -- --------------------------------------------------------
 
@@ -299,12 +325,12 @@ INSERT INTO `tblcomments` (`id`, `postId`, `name`, `email`, `comment`, `postingD
 --
 
 CREATE TABLE `tblpages` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `PageName` varchar(200) DEFAULT NULL,
-  `PageTitle` mediumtext DEFAULT NULL,
-  `Description` longtext DEFAULT NULL,
-  `PostingDate` timestamp NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `PageTitle` mediumtext,
+  `Description` longtext,
+  `PostingDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -322,37 +348,27 @@ INSERT INTO `tblpages` (`id`, `PageName`, `PageTitle`, `Description`, `PostingDa
 --
 
 CREATE TABLE `tblposts` (
-  `id` int(11) NOT NULL,
-  `CategoryId` int(11) DEFAULT NULL,
-  `PostingDate` timestamp NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `PostUrl` mediumtext DEFAULT NULL,
-  `PostImage` varchar(255) DEFAULT NULL,
-  `viewCounter` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
-  `lastUpdatedBy` varchar(255) DEFAULT NULL,
+  `id` int NOT NULL,
+  `CategoryId` int DEFAULT NULL,
+  `PostUrl` mediumtext,
+  `viewCounter` int DEFAULT '0',
+  `user_id` int NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'A',
-  `is_deleted` char(1) NOT NULL DEFAULT 'N'
+  `is_deleted` char(1) NOT NULL DEFAULT 'N',
+  `type` char(1) NOT NULL,
+  `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblposts`
 --
 
-INSERT INTO `tblposts` (`id`, `CategoryId`, `PostingDate`, `UpdationDate`, `PostUrl`, `PostImage`, `viewCounter`, `user_id`, `lastUpdatedBy`, `status`, `is_deleted`) VALUES
-(7, 3, '2021-07-07 18:30:00', '2021-11-10 18:42:01', 'Jasprit-Bumrah-ruled-out-of-England-T20I-series-due-to-injury', '6d08a26c92cf30db69197a1fb7230626.jpg', 24, 1, NULL, 'A', 'N'),
-(10, 7, '2021-06-30 18:30:00', '2023-01-15 11:13:59', 'Tata-Steel,-Thyssenkrupp-Finalise-Landmark-Steel-Deal', '505e59c459d38ce4e740e3c9f5c6caf7.jpg', 1, 1, NULL, 'D', 'N'),
-(11, 6, '2021-06-30 18:30:00', '2021-11-10 18:41:22', 'UNs-Jean-Pierre-Lacroix-thanks-India-for-contribution-to-peacekeeping', '27095ab35ac9b89abb8f32ad3adef56a.jpg', 34, 1, NULL, 'A', 'N'),
-(12, 6, '2021-06-30 18:30:00', '2021-11-10 19:00:27', 'Shah-holds-meeting-with-NE-states-leaders-in-Manipur', '7fdc1a630c238af0815181f9faa190f5.jpg', 22, 1, NULL, 'A', 'N'),
-(13, 3, '2021-11-10 18:50:09', '2023-01-15 10:21:10', 'T20-World-Cup-2021:-Semi-final-1,-England-vs-New-Zealand-â€“-Who-Said-What', '8bc5c30be91dca9d07c1db858c60e39f.jpg', 6, 1, 'NULL', 'A', 'N'),
-(14, 3, '2022-12-21 17:31:59', NULL, 'ufyyuy', '1e6ae4ada992769567b71815f124fac5.jpg', NULL, 1, NULL, 'A', 'N'),
-(15, 3, '2023-01-13 18:38:14', NULL, 'title', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
-(16, 6, '2023-01-13 18:41:14', NULL, 'dfdgfe', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
-(17, 3, '2023-01-13 18:42:19', NULL, 'testsfsygfs', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
-(18, 3, '2023-01-13 18:45:17', NULL, 'ydyrdy', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
-(19, 5, '2023-01-13 18:47:09', NULL, 'ufyyuyhtdft', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'A', 'N'),
-(20, 5, '2023-01-13 18:49:21', '2023-01-15 11:41:23', 'yfytd', '8df0d543a1411c7f9ea0507cabb50a91.png', NULL, 1, NULL, 'D', 'N'),
-(26, 10, '2023-01-26 08:00:49', '2023-02-04 14:26:59', 'Thios-is-test-title', '1674720049_6b228d5f49f370cef3a1ffe634f44fdc.jpg', NULL, 1, NULL, 'A', 'Y');
+INSERT INTO `tblposts` (`id`, `CategoryId`, `PostUrl`, `viewCounter`, `user_id`, `status`, `is_deleted`, `type`, `timestamp`) VALUES
+(43, 10, 'virat', NULL, 1, 'A', 'Y', 'V', 0),
+(44, 10, 'test-text', NULL, 1, 'A', 'N', 'T', 0),
+(46, 10, 'vdo-tets', NULL, 1, 'A', 'N', 'V', 0),
+(48, 10, 'test-time', NULL, 1, 'A', 'N', 'T', 1678349888),
+(49, 10, 'Test-for-api', 0, 1, 'A', 'N', 'I', 1678358117);
 
 -- --------------------------------------------------------
 
@@ -361,10 +377,10 @@ INSERT INTO `tblposts` (`id`, `CategoryId`, `PostingDate`, `UpdationDate`, `Post
 --
 
 CREATE TABLE `tblpost_descriptions` (
-  `id` int(11) NOT NULL,
-  `PostTitle` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `PostDetails` longtext CHARACTER SET utf8 NOT NULL,
-  `lang_code` char(2) CHARACTER SET utf8 NOT NULL
+  `id` int NOT NULL,
+  `PostTitle` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `PostDetails` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `lang_code` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -372,52 +388,21 @@ CREATE TABLE `tblpost_descriptions` (
 --
 
 INSERT INTO `tblpost_descriptions` (`id`, `PostTitle`, `PostDetails`, `lang_code`) VALUES
-(20, 'yfytd', '<p>tdytd</p>', 'ar'),
-(20, 'yfytd', '<p>tdytd</p>', 'en'),
-(20, 'yfytd', '<p>tdytd</p>', 'ur'),
-(21, 'title of news fahad', '<p>fahad new descsss</p>', ''),
-(21, 'title of news fahad', '<p>fahad new desc</p>', 'ar'),
-(21, 'titl en e of news fahad', '<p>fahad en new desc</p>', 'en'),
-(21, 'title of news fahadee', '<p>fahad new descsss</p>', 'ur'),
-(22, 'virat', '<p>gd</p>', 'ar'),
-(22, 'virat', '<p>gd</p>', 'en'),
-(22, 'virat', '<p>gd</p>', 'ur'),
-(23, 'virat', '<p>xvd</p>', 'ar'),
-(23, 'virat', '<p>xvd</p>', 'en'),
-(23, 'virat', '<p>xvd</p>', 'ur'),
-(26, 'Thios is test title', '<p>This is news content</p>', 'ar'),
-(26, 'Thios is test title', '<p>This is news content</p>', 'en'),
-(26, 'Thios is test title', '<p>This is news content</p>', 'ur');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tblsubcategory`
---
-
-CREATE TABLE `tblsubcategory` (
-  `SubCategoryId` int(11) NOT NULL,
-  `CategoryId` int(11) DEFAULT NULL,
-  `Subcategory` varchar(255) DEFAULT NULL,
-  `SubCatDescription` mediumtext DEFAULT NULL,
-  `PostingDate` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `Is_Active` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tblsubcategory`
---
-
-INSERT INTO `tblsubcategory` (`SubCategoryId`, `CategoryId`, `Subcategory`, `SubCatDescription`, `PostingDate`, `UpdationDate`, `Is_Active`) VALUES
-(3, 5, 'Bollywood ', 'Bollywood masala', '2021-06-21 18:30:00', '2021-11-07 17:59:57', 1),
-(4, 3, 'Cricket', 'Cricket\r\n\r\n', '2021-06-29 18:30:00', '2021-11-07 17:59:57', 1),
-(5, 3, 'Football', 'Football', '2021-06-29 18:30:00', '2021-11-07 17:59:57', 1),
-(6, 5, 'Television', 'TeleVision', '2021-06-30 18:30:00', '2021-11-07 17:59:57', 1),
-(7, 6, 'National', 'National', '2021-06-30 18:30:00', '2021-11-07 17:59:57', 1),
-(8, 6, 'International', 'International', '2021-06-30 18:30:00', '2021-11-07 17:59:57', 1),
-(9, 7, 'India', 'India', '2021-06-30 18:30:00', '2021-11-07 17:59:57', 1),
-(10, 8, 'Vaccination', 'Vaccination', '2021-11-07 18:18:25', NULL, 1);
+(43, 'virat', '<p>ggg</p>', 'ar'),
+(43, 'virat', '<p>ggg</p>', 'en'),
+(43, 'virat', '<p>ggg</p>', 'ur'),
+(44, 'test text', '<p>ggg</p>', 'ar'),
+(44, 'test text', '<p>gggff</p>', 'en'),
+(44, 'test text', '<p>ggg</p>', 'ur'),
+(46, 'vdo tets', '<p>test video</p>', 'ar'),
+(46, 'vdo tets', '<p>test video</p>', 'en'),
+(46, 'vdo tets', '<p>test video</p>', 'ur'),
+(48, 'ar test time', '<p>dd</p>', 'ar'),
+(48, 'test time', '<p>dd</p>', 'en'),
+(48, 'test time', '<p>dd</p>', 'ur'),
+(49, 'Test for api', '<p>Test api</p>', 'ar'),
+(49, 'Test for api', '<p>Test api</p>', 'en'),
+(49, 'Test for api', '<p>Test api</p>', 'ur');
 
 -- --------------------------------------------------------
 
@@ -426,28 +411,28 @@ INSERT INTO `tblsubcategory` (`SubCategoryId`, `CategoryId`, `Subcategory`, `Sub
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `userType` char(1) NOT NULL,
-  `phone` int(11) NOT NULL,
-  `CreationDate` timestamp NOT NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `phone` varchar(155) NOT NULL,
+  `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `userType`, `phone`, `CreationDate`, `UpdationDate`) VALUES
-(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', 'phpgurukulofficial@gmail.com', 'admin', 'A', 0, '2021-05-26 18:30:00', '2023-01-14 13:18:28'),
-(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'Content Contributer Name', 'C', 0, '2021-11-10 18:28:11', '2023-01-29 07:32:29'),
-(4, 'suadmin2', 'f925916e2754e5e03f75dd58a5733251', 'sbadmin@test.com', 'sbadmin', 'E', 0, '2021-11-10 18:28:32', '2023-01-14 13:52:13'),
-(5, 'testuser', 'f925916e2754e5e03f75dd58a5733251', 'sales1@siwe.tech', 'ssadmin1', 'C', 0, '2022-12-21 00:07:55', '2023-01-14 14:22:16'),
-(9, 'sub123', '9b569f88da56bc5530c11dca4ea52c58', 'sub123@gmail.com', 'Mohd Zaid', 'M', 0, '2023-01-15 07:48:36', NULL),
-(10, 'userggg', 'e10adc3949ba59abbe56e057f20f883e', 'test@gmail.com', 'This is end user', 'E', 0, '2023-01-29 08:46:43', NULL);
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `userType`, `phone`, `timestamp`) VALUES
+(1, 'admin', 'f925916e2754e5e03f75dd58a5733251', 'phpgurukulofficial@gmail.com', 'admin', 'A', '0', 0),
+(3, 'subadmin', 'f925916e2754e5e03f75dd58a5733251', 'sudamin@gmail.in', 'Content Contributer Name', 'C', '0', 0),
+(4, 'suadmin2', 'f925916e2754e5e03f75dd58a5733251', 'sbadmin@test.com', 'sbadmin', 'E', '0', 0),
+(5, 'testuser', 'f925916e2754e5e03f75dd58a5733251', 'sales1@siwe.tech', 'ssadmin1', 'C', '0', 0),
+(9, 'sub123', '9b569f88da56bc5530c11dca4ea52c58', 'sub123@gmail.com', 'Mohd Zaid', 'M', '0', 0),
+(10, 'userggg', 'e10adc3949ba59abbe56e057f20f883e', 'test@gmail.com', 'This is end user', 'E', '0', 0),
+(16, 'admin433', 'e10adc3949ba59abbe56e057f20f883e', 'admin433@gmail.com', 'test', 'P', '7655554443', 0);
 
 --
 -- Indexes for dumped tables
@@ -490,6 +475,12 @@ ALTER TABLE `payments`
   ADD PRIMARY KEY (`payment_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD UNIQUE KEY `article_type` (`article_type`);
+
+--
 -- Indexes for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
@@ -505,8 +496,8 @@ ALTER TABLE `tblcategory_descriptions`
 -- Indexes for table `tblcomments`
 --
 ALTER TABLE `tblcomments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`),
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `id` (`comment_id`),
   ADD KEY `postId` (`postId`);
 
 --
@@ -520,20 +511,14 @@ ALTER TABLE `tblpages`
 --
 ALTER TABLE `tblposts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+  ADD KEY `id` (`id`),
+  ADD KEY `postcatid` (`CategoryId`);
 
 --
 -- Indexes for table `tblpost_descriptions`
 --
 ALTER TABLE `tblpost_descriptions`
   ADD PRIMARY KEY (`id`,`lang_code`);
-
---
--- Indexes for table `tblsubcategory`
---
-ALTER TABLE `tblsubcategory`
-  ADD PRIMARY KEY (`SubCategoryId`),
-  ADD KEY `catid` (`CategoryId`);
 
 --
 -- Indexes for table `users`
@@ -550,77 +535,49 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ads`
 --
 ALTER TABLE `ads`
-  MODIFY `ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ad_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `mcq_options`
 --
 ALTER TABLE `mcq_options`
-  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tblcategory`
 --
 ALTER TABLE `tblcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tblcomments`
 --
 ALTER TABLE `tblcomments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tblpages`
 --
 ALTER TABLE `tblpages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tblposts`
 --
 ALTER TABLE `tblposts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- AUTO_INCREMENT for table `tblsubcategory`
---
-ALTER TABLE `tblsubcategory`
-  MODIFY `SubCategoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `tblcomments`
---
-ALTER TABLE `tblcomments`
-  ADD CONSTRAINT `pid` FOREIGN KEY (`postId`) REFERENCES `tblposts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tblposts`
---
-ALTER TABLE `tblposts`
-  ADD CONSTRAINT `postcatid` FOREIGN KEY (`CategoryId`) REFERENCES `tblcategory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `tblsubcategory`
---
-ALTER TABLE `tblsubcategory`
-  ADD CONSTRAINT `catid` FOREIGN KEY (`CategoryId`) REFERENCES `tblcategory` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

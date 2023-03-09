@@ -27,7 +27,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title>Newsportal | Edit User</title>
+        <title>In 360 News | Edit User</title>
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -151,6 +151,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 <option value="E" <?php if($row['userType'] == 'E') echo 'selected' ?>>End User</option>
                                                                 <option value="C" <?php if($row['userType'] == 'C') echo 'selected' ?>>Content Contributor</option>
                                                                 <option value="M" <?php if($row['userType'] == 'M') echo 'selected' ?>>Content Moderator</option>
+                                                                <option value="P" <?php if($row['userType'] == 'P') echo 'selected' ?>>Marketing</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -167,20 +168,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                                 </form>
                                             </div>
-
-
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
                                 </div>
                             </div>
                         </div>

@@ -35,7 +35,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <head>
 
-        <title> | Manage Categories</title>
+        <title>In 360 News | Manage Categories</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -135,9 +135,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <th>#</th>
                                                         <th> Category</th>
                                                         <th>Description</th>
-
-                                                        <th>Posting Date</th>
-                                                        <th>Last updation Date</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -158,8 +155,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                             <td><?php echo htmlentities($row['CategoryName']); ?></td>
                                                             <td><?php echo htmlentities($row['Description']); ?></td>
-                                                            <td><?php echo htmlentities($row['PostingDate']); ?></td>
-                                                            <td><?php echo htmlentities($row['UpdationDate']); ?></td>
                                                             <td><a href="edit-category.php?cid=<?php echo htmlentities($row['id']); ?>"><i class="fa fa-pencil" style="color: #29b6f6;"></i></a>
                                                                 &nbsp;<a href="manage-categories.php?rid=<?php echo htmlentities($row['id']); ?>&&action=del"> <i class="fa fa-trash-o" style="color: #f05050"></i></a> </td>
                                                         </tr>
@@ -196,9 +191,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <th>#</th>
                                                         <th> Category</th>
                                                         <th>Description</th>
-
-                                                        <th>Posting Date</th>
-                                                        <th>Last updation Date</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -217,8 +209,6 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <th scope="row"><?php echo htmlentities($cnt); ?></th>
                                                             <td><?php echo htmlentities($row['CategoryName']); ?></td>
                                                             <td><?php echo htmlentities($row['Description']); ?></td>
-                                                            <td><?php echo htmlentities($row['PostingDate']); ?></td>
-                                                            <td><?php echo htmlentities($row['UpdationDate']); ?></td>
                                                             <td><a href="manage-categories.php?resid=<?php echo htmlentities($row['id']); ?>"><i class="ion-arrow-return-right" title="Restore this category"></i></a>
                                                                 &nbsp;<a href="manage-categories.php?rid=<?php echo htmlentities($row['id']); ?>&&action=parmdel" title="Delete forever"> <i class="fa fa-trash-o" style="color: #f05050"></i> </td>
                                                         </tr>

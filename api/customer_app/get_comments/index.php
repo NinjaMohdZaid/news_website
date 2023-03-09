@@ -1,24 +1,18 @@
 <?php
 require("../entities/func.php");
-$obj= new news_functions();
+$obj = new news_functions();
 header('Access-control-Allow-Origin:*');
 header('Content-Type:application/json');
 header('Access-control-Allow-Methods:GET');
 header('Access-control-Allow-Headers:Content-type,Access-Control-Allow-Headers,Authorization,X-Request-With');
 $data = json_decode(file_get_contents("php://input"));
-if(empty($_REQUEST['id'])){
-    if(!empty($_REQUEST['lang_code'])){
+if (!empty($_REQUEST['news_id'])) {
+    if (!empty($_REQUEST['lang_code'])) {
         $lang_code = $_REQUEST['lang_code'];
-    }else{
+    } else {
         $lang_code = 'en';
     }
-    $news = $obj->fn_get_news($_REQUEST,0,$lang_code);
-}else{
-    if(!empty($_REQUEST['lang_code'])){
-        $lang_code = $_REQUEST['lang_code'];
-    }else{
-        $lang_code = 'en';
-    }
-    $news = $obj->fn_get_news_data($_REQUEST['id'],$lang_code);
+    $comments = $obj->fn_get_news_comments($_REQUEST['news_id'], [], 0, $lang_code);
 }
-echo json_encode($news);
+
+echo json_encode($comments);

@@ -10,7 +10,7 @@
                                 <a href="dashboard.php" class="waves-effect"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
 
                             </li>
-
+                            <?php if ($_SESSION['utype'] != 'P') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-sticky-note-o"></i> <span> News </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
@@ -19,6 +19,7 @@
                                         <li><a href="trash-news.php">Unapproved News</a></li>
                                     </ul>
                                 </li>
+                            <?php endif; ?>
 
 
 
@@ -30,6 +31,8 @@
                                         <li><a href="manage-categories.php">Manage Category</a></li>
                                     </ul>
                                 </li>
+                                <?php endif; ?>
+                                <?php if ($_SESSION['utype'] == 'A' || $_SESSION['utype'] == 'P') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-plus"></i> <span> Ads </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
@@ -37,7 +40,8 @@
                                         <li><a href="manage-ads.php">Manage Ads</a></li>
                                     </ul>
                                 </li>
-
+                                <?php endif; ?>
+                                <?php if ($_SESSION['utype'] == 'A') : ?>
                                 <li class="has_sub">
                                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user"></i> <span> Users </span> <span class="menu-arrow"></span></a>
                                     <ul class="list-unstyled">
@@ -50,8 +54,7 @@
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-comment-o"></i> <span> Comments </span> <span class="menu-arrow"></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="unapprove-comment.php">Approve Comments </a></li>
-                                    <li><a href="manage-comments.php">Approved Comments</a></li>
+                                    <li><a href="manage-comments.php">Manage Comments</a></li>
                                 </ul>
                             </li>
                             <?php endif; ?>

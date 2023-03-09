@@ -14,7 +14,8 @@ if (strlen($_SESSION['login']) == 0) {
         $password = md5($_POST['pwd']);
         $phone = $_POST['phone'];
         $usertype = $_POST['userType'];
-        $query = mysqli_query($con, "insert into users(username,email,name,password,userType,phone) values('$username','$email','$name','$password','$usertype','$phone')");
+        $timestamp = time();
+        $query = mysqli_query($con, "insert into users(username,email,name,password,userType,phone,timestamp)values('$username','$email','$name','$password','$usertype','$phone','$timestamp')");
         if ($query) {
             echo "<script>alert('User added successfully.');</script>";
             echo "<script type='text/javascript'> document.location = 'add-user; </script>";
@@ -133,12 +134,10 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <label for="email">Email Id</label>
                                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <label for="password">Password</label>
                                                     <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter password" required>
                                                 </div>
-
                                                 <div class="form-group m-b-20">
                                                     <label for="userType">User Role</label>
                                                     <select class="form-control" name="userType" id="userType">
@@ -146,10 +145,9 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <option value="E">End User</option>
                                                         <option value="C">Content Contributor</option>
                                                         <option value="M">Content Moderator</option>
+                                                        <option value="P">Marketing</option>
                                                     </select>
                                                 </div>
-
-
                                                 <div class="form-group">
                                                     <label class="col-md-2 control-label">&nbsp;</label>
                                                     <div class="col-md-10">
@@ -157,23 +155,9 @@ if (strlen($_SESSION['login']) == 0) {
                                                             Submit</button>
                                                     </div>
                                                 </div>
-
                                             </form>
                                         </div>
-
-
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
                                 </div>
                             </div>
                         </div>
