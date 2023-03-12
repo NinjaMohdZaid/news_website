@@ -206,4 +206,22 @@ class news_functions
         return $comment_id;
             
     }
+    function fn_check_user_available($phone)
+    {
+        if(empty($phone)){
+            return false;
+        }
+        $condition = $limit = $join = '';
+        $fields = "users.id";
+        $condition .= " AND users.userType = 'C'";
+        $condition .= " AND users.phone = '".$phone."'";
+        $query = "SELECT $fields FROM users $join where 1 $condition";
+        $run = mysqli_query($this->connection, $query);
+        $user_data = mysqli_fetch_all($run, MYSQLI_ASSOC);
+        if(!empty($user_data)){
+            $user_data = reset($user_data);
+            $user_id = $user_data['id'];
+        }
+        return !empty($user_id) ? $user_id : 0;
+    }
 }
